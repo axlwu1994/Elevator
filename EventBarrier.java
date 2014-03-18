@@ -64,5 +64,9 @@ public class EventBarrier extends AbstractEventBarrier{
 			}
 		}
 	}
+	
+	public boolean getEventOccuring(){
+		return eventOccurring;
+	}
 
 }

@@ -5,8 +5,9 @@ public class Minstrels extends Thread{
 	
 	EventBarrier myBarrier;
 	
-	Minstrels(){
+	Minstrels(EventBarrier barrier){
 		enteredCastle = false;
+		myBarrier = barrier;
 	}
 	
 	public void run(){
@@ -18,6 +19,10 @@ public class Minstrels extends Thread{
 	
 	private void getToCastle(){
 		enteredCastle = true;
+	}
+	
+	public boolean getIntoCastle() {
+		return enteredCastle;
 	}
 	
 }

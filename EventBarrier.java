@@ -7,8 +7,14 @@
 
 public class EventBarrier extends AbstractEventBarrier{
 
-	private int numThreadsNotFinished = 0;
-	private boolean eventOccurring = false;
+	
+	private int numThreadsNotFinished;
+	private boolean eventOccurring;
+	
+	public EventBarrier(){
+		numThreadsNotFinished = 0;
+		eventOccurring = false;
+	}
 	
 	@Override
 	public synchronized void arrive() {
@@ -49,7 +55,7 @@ public class EventBarrier extends AbstractEventBarrier{
 	
 	
 	private synchronized void blockUntilAllThreadsComplete(){
-		while(numThreadsNotFinished != 0){
+		while(numThreadsNotFinished > 0){
 			try {
 				this.wait();
 			} catch (InterruptedException e) {

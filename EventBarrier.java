@@ -2,35 +2,61 @@
  * 
  * @author Ryan Fishel
  * @author Ryan Toussaint
- * @author Lyndsay Kerwin
- * @author Carlos Reyes
  *
  */
 
 public class EventBarrier extends AbstractEventBarrier{
 
+	private int numThreadsNotFinished = 0;
+	private boolean eventOccurring = false;
+	
 	@Override
-	public void arrive() {
-		// TODO Auto-generated method stub
-		
+	public synchronized void arrive() {
+		// check to see if an event is occurring -- if occurring, return.
+		// if the event is NOT occurring, then block
+		numThreadsNotFinished++;
+		while(!eventOccurring){
+			try {
+				this.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return;
 	}
 
 	@Override
-	public void raise() {
-		// TODO Auto-generated method stub
+	public synchronized void raise() {
+		eventOccurring = true;
+		this.notifyAll();
 		
+		//wait for all threads to complete, then change boolean back to false --> then return from raise
+		blockUntilAllThreadsComplete();
+		eventOccurring = false;
 	}
 
 	@Override
-	public void complete() {
-		// TODO Auto-generated method stub
-		
+	public synchronized void complete() {
+		numThreadsNotFinished--;
+		blockUntilAllThreadsComplete();
 	}
 
 	@Override
-	public int waiters() {
-		// TODO Auto-generated method stub
-		return 0;
+	public synchronized int waiters() {
+		return numThreadsNotFinished;
+	}
+	
+	
+	private synchronized void blockUntilAllThreadsComplete(){
+		while(numThreadsNotFinished != 0){
+			try {
+				this.wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

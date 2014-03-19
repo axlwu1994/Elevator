@@ -1,7 +1,7 @@
 
 public class GateKeeper extends Thread {
 
-	EventBarrier myBarrier = new EventBarrier();
+	EventBarrier myBarrier;
 	public GateKeeper(EventBarrier barrier){
 		myBarrier = barrier;
 	}

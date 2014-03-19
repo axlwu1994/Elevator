@@ -13,21 +13,24 @@ public class TestEventBarrier {
 	private GateKeeper gk = new GateKeeper(bar);
 	
 	@Test
-	public void test() {
-		m1.run();
-		m2.run();
-		m3.run();
+	public void test() throws InterruptedException {
+		m1.start();
+		m2.start();
+		m3.start();
+		assertFalse(bar.getEventOccuring());
+		gk.start();
+
+		m4.start();
+
 		
-		gk.run();
+		Thread.sleep(100);
 
 		assertTrue(bar.getEventOccuring());
-		
-		m4.run();
-
 		assertTrue(m1.getIntoCastle());
 		assertTrue(m2.getIntoCastle());
 		assertTrue(m3.getIntoCastle());
 		assertTrue(m4.getIntoCastle());
+		
 		assertFalse(bar.getEventOccuring());
 		
 	}

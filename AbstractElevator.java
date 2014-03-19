@@ -4,6 +4,10 @@ public abstract class AbstractElevator {
 	protected int numFloors; 
 	protected int elevatorId;
 	protected int maxOccupancyThreshold;
+	
+	protected boolean doorsOpen;
+	protected boolean atFloor; //at the current floor
+	protected boolean goingUp;
 
 	/**
 	 * Other variables/data structures as needed goes here 

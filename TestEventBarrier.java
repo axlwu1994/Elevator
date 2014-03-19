@@ -22,10 +22,8 @@ public class TestEventBarrier {
 
 		m4.start();
 
-		
 		Thread.sleep(100);
 
-		assertTrue(bar.getEventOccuring());
 		assertTrue(m1.getIntoCastle());
 		assertTrue(m2.getIntoCastle());
 		assertTrue(m3.getIntoCastle());

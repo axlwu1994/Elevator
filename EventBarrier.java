@@ -43,6 +43,7 @@ public class EventBarrier extends AbstractEventBarrier{
 
 		//wait for all threads to complete, then change boolean back to false --> then return from raise
 		blockUntilAllThreadsComplete();
+		eventOccurring = false;
 	}
 
 	@Override
@@ -66,7 +67,7 @@ public class EventBarrier extends AbstractEventBarrier{
 			}
 		}
 		//System.out.println("END OF BLOCK UNTIL COMPLETE");
-		eventOccurring = false;
+		notifyAll();
 		return;
 	}
 

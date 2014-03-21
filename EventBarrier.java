@@ -3,7 +3,7 @@
 /**
  * 
  * @author Ryan Fishel
- * @author Ryan Toussaint
+ * @author rtoussaint
  *
  */
 
@@ -12,12 +12,14 @@ public class EventBarrier extends AbstractEventBarrier{
 
 	private int numThreadsNotFinished;
 	private boolean eventOccurring;
+	private int myFloor;
 	//private Map<Thread, Long> threadMap;
 
 	public EventBarrier(){
 		numThreadsNotFinished = 0;
 		eventOccurring = false;
 		//threadMap = new HashMap<Thread, Long>();
+		myFloor = 0;
 	}
 
 	@Override
@@ -25,7 +27,6 @@ public class EventBarrier extends AbstractEventBarrier{
 		// check to see if an event is occurring -- if occurring, return.
 		// if the event is NOT occurring, then block
 		numThreadsNotFinished++;
-		System.out.println(numThreadsNotFinished);
 		while(!eventOccurring) {
 			try {
 				wait();
@@ -33,7 +34,6 @@ public class EventBarrier extends AbstractEventBarrier{
 				e.printStackTrace();
 			}
 		}
-		System.out.println("arrived");
 		return;
 	}
 
@@ -50,7 +50,6 @@ public class EventBarrier extends AbstractEventBarrier{
 	@Override
 	public synchronized void complete() {
 		numThreadsNotFinished--;
-		System.out.println(numThreadsNotFinished);
 		blockUntilAllThreadsComplete();
 	}
 
@@ -75,6 +74,14 @@ public class EventBarrier extends AbstractEventBarrier{
 
 	public boolean getEventOccuring(){
 		return eventOccurring;
+	}
+	
+	public void setFloor(int floor){
+		myFloor = floor;
+	}
+	
+	public int getFloor(){
+		return myFloor;
 	}
 
 }

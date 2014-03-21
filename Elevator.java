@@ -2,6 +2,12 @@ import java.util.ArrayList;
 import java.util.TreeSet;
 import java.util.List;
 
+/**
+ * 
+ * @author rtoussaint
+ *
+ */
+
 
 public class Elevator extends AbstractElevator{
 	
@@ -9,8 +15,7 @@ public class Elevator extends AbstractElevator{
 	private boolean doorsOpen;
 	private boolean atFloor; //at the current floor
 	private boolean goingUp;
-	private ArrayList<EventBarrier> upBarriers;
-	private ArrayList<EventBarrier> downBarriers;
+
 	private TreeSet<Integer> upRequests;
 	private TreeSet<Integer> downRequests;
 	
@@ -20,18 +25,12 @@ public class Elevator extends AbstractElevator{
 	
 	private int currentFloor;
 	
+	private int destinationFloor;
+	
 	
 	public Elevator(int numFloors, int elevatorId, int maxOccupancyThreshold) {
 		super(numFloors, elevatorId, maxOccupancyThreshold);
-		//passengers = new ArrayList<Thread>();
-		//array list of all of the event barriers
-		upBarriers = new ArrayList<EventBarrier>();
-		downBarriers = new ArrayList<EventBarrier>();
-		//create an up and down barrier for each floor
-		for (int i = 0; i < numFloors + 1; i++) {
-			upBarriers.add(new EventBarrier());
-			downBarriers.add(new EventBarrier());
-		}
+
 			
 	}
 
@@ -53,7 +52,25 @@ public class Elevator extends AbstractElevator{
 	@Override
 	public void ClosedDoors() {
 		// TODO Auto-generated method stub
-		
+		//choose floor to go to
+		//loop through people in elevator to see where to go to
+		int val = numFloors;
+		for(Rider currentRider : passengers){
+			if(goingUp && currentRider.getDestinationFloor() < val){
+				val = currentRider.getDestinationFloor();
+			}
+			else if(!goingUp){
+				if(val == numFloors){
+					val = 0;
+				}
+				
+				if(currentRider.getDestinationFloor() > val){
+					val = currentRider.getDestinationFloor();
+				}
+			}
+			
+		}
+		destinationFloor = val;
 	}
 
 	@Override
@@ -86,15 +103,28 @@ public class Elevator extends AbstractElevator{
 	
 	private void addRiders(){
 		//use goingUp boolean to see which people to add
-	
+		//Ryan Fishel
 	}
 	
 	private void subtractRiders(){
 		for(Rider x : passengers){
-			if(x.getState == currentFloor){
+			if(x.getDestinationFloor() == currentFloor){
 				numOfRiders--;
 			}
 		}
 	}
+	
+	public boolean getUpStatus(){
+		return goingUp;
+	}
+	
+	public int getCurrentFloor(){
+		return currentFloor;
+	}
 
+	
+	
+	public void setDestinationFloor(int floor){
+		destinationFloor = floor;
+	}
 }

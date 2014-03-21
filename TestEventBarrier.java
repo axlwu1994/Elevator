@@ -24,7 +24,7 @@ public class TestEventBarrier {
 
 		//m4 we want to get through while the gate is up
 		m4.start();
-
+		
 		Thread.sleep(100);
 		//we want these to stop at the gate because it has been lowered
 		m5.start();

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.TreeSet;
 import java.util.List;
 
 
@@ -8,6 +9,10 @@ public class Elevator extends AbstractElevator{
 	private boolean doorsOpen;
 	private boolean atFloor; //at the current floor
 	private boolean goingUp;
+	private ArrayList<EventBarrier> upBarriers;
+	private ArrayList<EventBarrier> downBarriers;
+	private TreeSet<Integer> upRequests;
+	private TreeSet<Integer> downRequests;
 	
 	private int numOfRiders;
 	
@@ -18,7 +23,16 @@ public class Elevator extends AbstractElevator{
 	
 	public Elevator(int numFloors, int elevatorId, int maxOccupancyThreshold) {
 		super(numFloors, elevatorId, maxOccupancyThreshold);
-		passengers = new ArrayList<Thread>();
+		//passengers = new ArrayList<Thread>();
+		//array list of all of the event barriers
+		upBarriers = new ArrayList<EventBarrier>();
+		downBarriers = new ArrayList<EventBarrier>();
+		//create an up and down barrier for each floor
+		for (int i = 0; i < numFloors + 1; i++) {
+			upBarriers.add(new EventBarrier());
+			downBarriers.add(new EventBarrier());
+		}
+			
 	}
 
 	@Override

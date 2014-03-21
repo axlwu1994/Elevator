@@ -25,6 +25,7 @@ public class EventBarrier extends AbstractEventBarrier{
 		// check to see if an event is occurring -- if occurring, return.
 		// if the event is NOT occurring, then block
 		numThreadsNotFinished++;
+		System.out.println(numThreadsNotFinished);
 		while(!eventOccurring) {
 			try {
 				wait();
@@ -32,6 +33,7 @@ public class EventBarrier extends AbstractEventBarrier{
 				e.printStackTrace();
 			}
 		}
+		System.out.println("arrived");
 		return;
 	}
 
@@ -48,6 +50,7 @@ public class EventBarrier extends AbstractEventBarrier{
 	@Override
 	public synchronized void complete() {
 		numThreadsNotFinished--;
+		System.out.println(numThreadsNotFinished);
 		blockUntilAllThreadsComplete();
 	}
 

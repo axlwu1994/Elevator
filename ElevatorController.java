@@ -52,4 +52,8 @@ public class ElevatorController {
 		return onlyBuilding;
 	}
 	
+	protected HashSet<Elevator> getElevators(){
+		return allElevators;
+	}
+	
 }

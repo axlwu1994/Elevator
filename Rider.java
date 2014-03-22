@@ -11,8 +11,9 @@ public class Rider extends Thread{
 
 	private int currentFloor;
 	private int destFloor;
-	
-	Boolean onElevator;
+	//TODO: distance from destination floor -- to know which way the rider is going
+	private boolean onElevator;
+	private boolean goingUp;
 	
 	private EventBarrier myBarrier;
 	private Building myBuilding;
@@ -23,9 +24,20 @@ public class Rider extends Thread{
 		EventBarrier myBarrier = new EventBarrier();
 		currentFloor = presentFloor;
 		destFloor = destination;
+		setDirection();
 		
 	}
 	
+	private void setDirection() {
+		// TODO Auto-generated method stub
+		if(currentFloor > destFloor){
+			goingUp = false;
+		}
+		else {
+			goingUp = true;
+		}
+	}
+
 	/**
 	 * Signal to the program that this rider wants to take an elevator up.  It will wait() until the Elevator wakes
 	 * it up, once it arrives on its floor.
@@ -33,7 +45,15 @@ public class Rider extends Thread{
 	public void buttonUp(){
 		myBuilding.CallUp(currentFloor); //also reroute the elevator in case it is in progress
 		myBarrier.arrive();
-		//TODO: add rider to onboarding
+		
+		for(Elevator elevator : myBuilding.getElevatorController().getElevators()){
+			if(currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() > elevator.getNumPassengers() && elevator.getUpStatus()){
+				elevator.addPassenger(this);
+			}
+		}
+		myBarrier.complete();
+		//TODO: if the rider doesn't get on the elevator should the button be pressed again?
+		
 	}
 
 	/**
@@ -43,6 +63,18 @@ public class Rider extends Thread{
 	public void buttonDown(){
 		myBuilding.CallDown(currentFloor);
 		myBarrier.arrive();
+		
+		for(Elevator elevator : myBuilding.getElevatorController().getElevators()){
+			if(currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() > elevator.getNumPassengers() && !elevator.getUpStatus()){
+				elevator.addPassenger(this);
+				myBarrier.complete();
+			}
+			else{
+				//TODO: if the rider doesn't get the on the elevator
+			}
+		}
+		
+		//TODO: if the rider doesn't get on the elevator should the button be pressed again?
 	}
 	
 	/**

@@ -14,6 +14,7 @@ public class Rider extends Thread{
 	//TODO: distance from destination floor -- to know which way the rider is going
 	private boolean onElevator;
 	private boolean goingUp;
+
 	
 	private EventBarrier myBarrier;
 	private Building myBuilding;

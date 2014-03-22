@@ -3,7 +3,7 @@ import java.util.HashSet;
 
 /**
  * 
- * @author rtoussaint
+ * @author Lyndsay Kerwin
  *
  *There is only one building for program.  It knows which floors have their 'up' and 'down' buttons pushed.  If a 
  *floor has its up button pushed, then this floor is added to upBarriers -- same for the 'down' button pushed.
@@ -15,7 +15,7 @@ public class Building extends AbstractBuilding{
 	private HashSet<EventBarrier> downBarriers;
 	private HashSet<EventBarrier> onBarriers;
 	
-	private ElevatorController elevatorController;
+	private ElevatorController myElevatorController;
 	
 	public Building(int numFloors, int numElevators) {
 		super(numFloors, numElevators);
@@ -26,7 +26,7 @@ public class Building extends AbstractBuilding{
 	public AbstractElevator CallUp(int fromFloor) {
 		// TODO Auto-generated method stub
 		addUpBarrier(fromFloor);
-		elevatorController.checkUpElevators(fromFloor);
+		myElevatorController.checkUpElevators(fromFloor);
 		return null;
 	}
 
@@ -34,7 +34,7 @@ public class Building extends AbstractBuilding{
 	public AbstractElevator CallDown(int fromFloor) {
 		// TODO Auto-generated method stub
 		addDownBarrier(fromFloor);
-		elevatorController.checkDownElevators(fromFloor);
+		myElevatorController.checkDownElevators(fromFloor);
 		return null;
 	}
 	
@@ -87,6 +87,29 @@ public class Building extends AbstractBuilding{
 		}
 	}
 	
+	/**
+	 * TODO: Make elevator run
+	 */
+	public void runElevatorLoop () {
+		while (true) {
+			if (!upBarriers.isEmpty()) {
+				for (EventBarrier eb : upBarriers) {
+					myElevatorController.checkUpElevators(eb.getFloor());
+				}
+			}
+			if (!downBarriers.isEmpty()) {
+				for (EventBarrier eb : upBarriers) {
+					myElevatorController.checkDownElevators(eb.getFloor());
+				}
+			}
+			if (!onBarriers.isEmpty()) {
+				for (EventBarrier eb : upBarriers) {
+					myElevatorController.checkOnElevators(eb.getFloor());
+				}
+			}
+		}
+	}
+	
 	protected HashSet<EventBarrier> getUpBarriers(){
 		return upBarriers;
 	}
@@ -100,7 +123,7 @@ public class Building extends AbstractBuilding{
 	}
 	
 	protected ElevatorController getElevatorController(){
-		return elevatorController;
+		return myElevatorController;
 	}
 
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * 
- * @author rtoussaint
+ * @author Lyndsay Kerwin
  *
  */
 
@@ -37,9 +37,8 @@ public class Elevator extends AbstractElevator{
 
 	@Override
 	public void OpenDoors() {
+		//Not used
 		//people get out and new members get in --> close doors
-	
-		
 	}
 
 	@Override
@@ -67,6 +66,10 @@ public class Elevator extends AbstractElevator{
 		
 	}
 
+	/**
+	 * TODO: Check race conditions (doors can't open in transit, rider can't
+	 * leave during transit
+	 */
 	@Override
 	public void VisitFloor(int floor) {
 		//set currentFloor to the correctValue

@@ -1,7 +1,7 @@
 
 /**
  * 
- * @author rtoussaint
+ * @author Lyndsay Kerwin
  * This class takes care of the functionality that is associated with Riders.  Each rider knows what floor it is
  * on, which floor it is on, whether or not it's on an elevator, and its building and event barrier.  In order to
  * get on an elevator, the rider has to signal but calling buttonUp or buttonDown.
@@ -51,6 +51,10 @@ public class Rider extends Thread{
 			if(currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() > elevator.getNumPassengers() && elevator.getUpStatus()){
 				elevator.addPassenger(this);
 			}
+			else if (currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() < elevator.getNumPassengers()  && elevator.getUpStatus()){
+				this.buttonUp();
+				this.updateEventBarrier(myBarrier);
+			}
 		}
 		myBarrier.complete();
 		//TODO: if the rider doesn't get on the elevator should the button be pressed again?
@@ -70,8 +74,9 @@ public class Rider extends Thread{
 				elevator.addPassenger(this);
 				myBarrier.complete();
 			}
-			else{
-				//TODO: if the rider doesn't get the on the elevator
+			else if (currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() < elevator.getNumPassengers()  && !elevator.getUpStatus()){
+				this.buttonDown();
+				this.updateEventBarrier(myBarrier);
 			}
 		}
 		
@@ -107,6 +112,15 @@ public class Rider extends Thread{
 	
 	public void setDestinationFloor(){
 		//TODO: implement this method so that a rider can change destination once it rides the elevator
+	}
+	
+	public void run() {
+		if(goingUp) {
+			buttonUp();
+		}
+		else{
+			buttonDown();
+		}
 	}
 	
 }

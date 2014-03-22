@@ -2,19 +2,21 @@ import java.util.HashSet;
 
 /**
  * 
- * @author rtoussaint
+ * @author Lyndsay Kerwin
  *
  */
 
 public class ElevatorController {
 	private HashSet<Elevator> allElevators;
-	private boolean takenCareOf_Up = false;
-	private boolean takenCareOf_Down = false;
+	private boolean checkUp;
+	private boolean checkDown;
 	
 	private Building onlyBuilding;
 	
 	public ElevatorController(Building building){
 		onlyBuilding = building;
+		checkUp = false;
+		checkDown = false;
 	}
 	
 	/**
@@ -24,12 +26,12 @@ public class ElevatorController {
 	 * @param rerouteFloor
 	 */
 	protected synchronized void checkUpElevators(int rerouteFloor) {
-		if(!takenCareOf_Up){
+		if(!checkUp){
 			for(Elevator curElevator : allElevators){
 				if(curElevator.getUpStatus() && curElevator.getCurrentFloor() < rerouteFloor){
 					//the elevator is going up so reroute to new floor
 					curElevator.setDestinationFloor(rerouteFloor);
-					takenCareOf_Up = true;
+					checkUp = true;
 				}
 			}
 		}
@@ -37,15 +39,19 @@ public class ElevatorController {
 	
 	
 	protected synchronized void checkDownElevators(int rerouteFloor) {
-		if(!takenCareOf_Down){
+		if(!checkDown){
 			for(Elevator curElevator : allElevators){
 				if(!curElevator.getUpStatus() && curElevator.getCurrentFloor() > rerouteFloor){
 					//the elevator is going up so reroute to new floor
 					curElevator.setDestinationFloor(rerouteFloor);
-					takenCareOf_Down = true;
+					checkDown = true;
 				}
 			}
 		}
+	}
+	
+	protected synchronized void checkOnElevators(int rerouteFloor) {
+		
 	}
 	
 	protected Building getBuilding(){

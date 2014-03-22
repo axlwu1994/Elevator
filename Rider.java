@@ -71,4 +71,9 @@ public class Rider extends Thread{
 		return destFloor;
 	}
 	
+	
+	public void setDestinationFloor(){
+		//TODO: implement this method so that a rider can change destination once it rides the elevator
+	}
+	
 }

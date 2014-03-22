@@ -38,16 +38,11 @@ public class Elevator extends AbstractElevator{
 	@Override
 	public void OpenDoors() {
 		//people get out and new members get in --> close doors
-		
-		
-		
 		subtractRiders();
 		addRiders();
 		
 		//maybe other methods here
 		
-		
-
 	}
 
 	@Override
@@ -68,8 +63,7 @@ public class Elevator extends AbstractElevator{
 				if(currentRider.getDestinationFloor() > val){
 					val = currentRider.getDestinationFloor();
 				}
-			}
-			
+			}	
 		}
 		destinationFloor = val;
 	}
@@ -99,11 +93,7 @@ public class Elevator extends AbstractElevator{
 			
 		//call openDoors
 		OpenDoors();
-		
-		
-		
 		ClosedDoors();
-		
 	}
 
 	@Override
@@ -124,19 +114,10 @@ public class Elevator extends AbstractElevator{
 		
 	}
 	
-	
-	
-	
 	private void addRiders(){
 		//use goingUp boolean to see which people to add
 		//Ryan Fishel
-		if(goingUp){
-			
-		}
-		for(EventBarrier x : controller.getBuilding().getUpBarriers()){
-			if(x.getFloor() == currentFloor )
-		}
-		
+
 	}
 	
 	private void subtractRiders(){
@@ -159,8 +140,6 @@ public class Elevator extends AbstractElevator{
 		return currentFloor;
 	}
 
-	
-	
 	public void setDestinationFloor(int floor){
 		destinationFloor = floor;
 	}

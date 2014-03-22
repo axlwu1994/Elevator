@@ -109,4 +109,13 @@ public class Rider extends Thread{
 		//TODO: implement this method so that a rider can change destination once it rides the elevator
 	}
 	
+	public void run() {
+		if(goingUp) {
+			buttonUp();
+		}
+		else{
+			buttonDown();
+		}
+	}
+	
 }

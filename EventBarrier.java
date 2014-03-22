@@ -95,5 +95,13 @@ public class EventBarrier extends AbstractEventBarrier{
 	public int getFloor(){
 		return myFloor;
 	}
+	
+	@Override
+    public int hashCode() {
+		int hash = 17;
+		hash += 13*myFloor;
+		return myFloor;
+	}
+	
 
 }

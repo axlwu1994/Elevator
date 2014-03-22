@@ -38,10 +38,7 @@ public class Elevator extends AbstractElevator{
 	@Override
 	public void OpenDoors() {
 		//people get out and new members get in --> close doors
-		subtractRiders();
-		addRiders();
-		
-		//maybe other methods here
+	
 		
 	}
 
@@ -66,12 +63,22 @@ public class Elevator extends AbstractElevator{
 			}	
 		}
 		destinationFloor = val;
+		//TODO: go to this Floor
+		
 	}
 
 	@Override
 	public void VisitFloor(int floor) {
 		//set currentFloor to the correctValue
 		
+		//wake everyone up on the elevator
+		for(EventBarrier x : controller.getBuilding().getOnBarriers()){
+			if(floor == x.getFloor()){
+				x.raise();
+				subtractRiders();
+			}
+		}
+				
 		//raise the event so riders know to wake up
 		if(goingUp){
 			for(EventBarrier curBarrier : controller.getBuilding().getUpBarriers()){
@@ -79,6 +86,8 @@ public class Elevator extends AbstractElevator{
 					//tell that floor to wake up and get on the elevator
 					curBarrier.raise();
 					//TODO: add riders to list for the elevator to know who to add.
+					
+					
 				}
 			}
 		}
@@ -87,12 +96,12 @@ public class Elevator extends AbstractElevator{
 				if(curBarrier.getFloor() == floor){
 					//tell that floor to wake up and get on the elevator
 					curBarrier.raise();
+					
 				}
 			}
 		}
 			
-		//call openDoors
-		OpenDoors();
+		
 		ClosedDoors();
 	}
 
@@ -114,11 +123,6 @@ public class Elevator extends AbstractElevator{
 		
 	}
 	
-	private void addRiders(){
-		//use goingUp boolean to see which people to add
-		//Ryan Fishel
-
-	}
 	
 	private void subtractRiders(){
 		for(Rider x : passengers){
@@ -148,4 +152,17 @@ public class Elevator extends AbstractElevator{
 	private void changeDirection(){
 		//the elevator needs to know when to change direction 
 	}
+	
+	public int getMaxOccupancy(){
+		return maxOccupancyThreshold;
+	}
+	
+	public int getNumPassengers(){
+		return passengers.size();
+	}
+
+	public void addPassenger(Rider x) {
+		passengers.add(x);	
+	}
+	
 }

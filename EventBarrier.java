@@ -1,5 +1,4 @@
 
-
 /**
  * 
  * @author Ryan Fishel
@@ -13,7 +12,7 @@ public class EventBarrier extends AbstractEventBarrier{
 	private int numThreadsNotFinished;
 	private boolean eventOccurring;
 	private int myFloor;
-	//private Map<Thread, Long> threadMap;
+	
 
 	public EventBarrier(){
 		numThreadsNotFinished = 0;
@@ -27,6 +26,7 @@ public class EventBarrier extends AbstractEventBarrier{
 		// check to see if an event is occurring -- if occurring, return.
 		// if the event is NOT occurring, then block
 		numThreadsNotFinished++;
+		
 		while(!eventOccurring) {
 			try {
 				wait();
@@ -71,15 +71,27 @@ public class EventBarrier extends AbstractEventBarrier{
 		notifyAll();
 		return;
 	}
-
+	
+	/**
+	 * See if an event is occurring 
+	 * @return is the event occurring
+	 */
 	public boolean getEventOccuring(){
 		return eventOccurring;
 	}
 	
+	/**
+	 * Set the floor for this Event Barrier
+	 * @param floor
+	 */
 	public void setFloor(int floor){
 		myFloor = floor;
 	}
 	
+	/**
+	 * Floor for this event barrier
+	 * @return the floor for this event barrier
+	 */
 	public int getFloor(){
 		return myFloor;
 	}

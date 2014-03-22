@@ -8,10 +8,8 @@ import java.util.List;
  *
  */
 
-
 public class Elevator extends AbstractElevator{
-	
-	
+
 	private boolean doorsOpen;
 	private boolean atFloor; //at the current floor
 	private boolean goingUp;
@@ -22,10 +20,13 @@ public class Elevator extends AbstractElevator{
 	private int numOfRiders;
 	
 	List<Rider> passengers;
+	List<Rider> peopleBoarding;
 	
 	private int currentFloor;
 	
 	private int destinationFloor;
+	
+	private ElevatorController controller;
 	
 	
 	public Elevator(int numFloors, int elevatorId, int maxOccupancyThreshold) {
@@ -45,7 +46,7 @@ public class Elevator extends AbstractElevator{
 		
 		//maybe other methods here
 		
-		ClosedDoors();
+		
 
 	}
 
@@ -76,7 +77,32 @@ public class Elevator extends AbstractElevator{
 	@Override
 	public void VisitFloor(int floor) {
 		//set currentFloor to the correctValue
+		
+		//raise the event so riders know to wake up
+		if(goingUp){
+			for(EventBarrier curBarrier : controller.getBuilding().getUpBarriers()){
+				if(curBarrier.getFloor() == floor){
+					//tell that floor to wake up and get on the elevator
+					curBarrier.raise();
+					//TODO: add riders to list for the elevator to know who to add.
+				}
+			}
+		}
+		if(!goingUp){
+			for(EventBarrier curBarrier : controller.getBuilding().getDownBarriers()){
+				if(curBarrier.getFloor() == floor){
+					//tell that floor to wake up and get on the elevator
+					curBarrier.raise();
+				}
+			}
+		}
+			
 		//call openDoors
+		OpenDoors();
+		
+		
+		
+		ClosedDoors();
 		
 	}
 
@@ -104,12 +130,23 @@ public class Elevator extends AbstractElevator{
 	private void addRiders(){
 		//use goingUp boolean to see which people to add
 		//Ryan Fishel
+		if(goingUp){
+			
+		}
+		for(EventBarrier x : controller.getBuilding().getUpBarriers()){
+			if(x.getFloor() == currentFloor )
+		}
+		
 	}
 	
 	private void subtractRiders(){
 		for(Rider x : passengers){
 			if(x.getDestinationFloor() == currentFloor){
 				numOfRiders--;
+				controller.getBuilding().getOnBarriers().remove(x);
+				/*now this 'rider' is off the elevator but just staying on the floor -- it will need to 'callUp' 
+				 * or 'callDown' in order to get back on.
+				 */
 			}
 		}
 	}
@@ -126,5 +163,10 @@ public class Elevator extends AbstractElevator{
 	
 	public void setDestinationFloor(int floor){
 		destinationFloor = floor;
+	}
+	
+	//TODO: change elevator direction
+	private void changeDirection(){
+		//the elevator needs to know when to change direction 
 	}
 }

@@ -12,7 +12,7 @@ public class Rider extends Thread{
 	private int currentFloor;
 	private int destFloor;
 	
-	Boolean onElevator;
+	private boolean onElevator;
 	
 	private EventBarrier myBarrier;
 	private Building myBuilding;

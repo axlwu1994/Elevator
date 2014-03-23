@@ -37,9 +37,6 @@ public class Rider extends Thread{
 	 * it up, once it arrives on its floor.
 	 */
 	public void buttonUp(){
-		
-		System.out.println(myBuilding + " " + currentFloor);
-		System.out.println("\n");
 		myBuilding.CallUp(currentFloor); 
 		myBarrier.arrive();
 		

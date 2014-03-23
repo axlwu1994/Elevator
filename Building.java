@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 
@@ -13,14 +14,19 @@ import java.util.HashSet;
 
 public class Building extends AbstractBuilding{
 
-	private HashSet<EventBarrier> upBarriers; //list of floors that have the 'up' button pushed
-	private HashSet<EventBarrier> downBarriers;
-	private HashSet<EventBarrier> onBarriers;
+	private Set<EventBarrier> upBarriers; //list of floors that have the 'up' button pushed
+	private Set<EventBarrier> downBarriers;
+	private Set<EventBarrier> onBarriers;
 
 	private ElevatorController myElevatorController;
 
 	public Building(int numFloors, int numElevators) {
 		super(numFloors, numElevators);
+		
+		upBarriers = new HashSet<EventBarrier>();
+		downBarriers = new HashSet<EventBarrier>();
+		onBarriers = new HashSet<EventBarrier>();
+		
 		// TODO Auto-generated constructor stub
 	}
 
@@ -28,6 +34,7 @@ public class Building extends AbstractBuilding{
 	public AbstractElevator CallUp(int fromFloor) {
 		// TODO Auto-generated method stub
 		addUpBarrier(fromFloor);
+		System.out.println("money " + myElevatorController);
 		myElevatorController.checkUpElevators(fromFloor);
 		return null;
 	}
@@ -124,20 +131,25 @@ public class Building extends AbstractBuilding{
 		}
 	}
 
-	protected HashSet<EventBarrier> getUpBarriers(){
+	protected Set<EventBarrier> getUpBarriers(){
 		return upBarriers;
 	}
 
-	protected HashSet<EventBarrier> getDownBarriers(){
+	protected Set<EventBarrier> getDownBarriers(){
 		return downBarriers;
 	}
 
-	protected HashSet<EventBarrier> getOnBarriers(){
+	protected Set<EventBarrier> getOnBarriers(){
 		return onBarriers;
 	}
 
 	protected ElevatorController getElevatorController(){
 		return myElevatorController;
+	}
+
+	public void setElevatorController(ElevatorController ec) {
+		this.myElevatorController = ec;
+		
 	}
 
 }

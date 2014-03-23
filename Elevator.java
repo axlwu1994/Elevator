@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.TreeSet;
 import java.util.List;
 
@@ -156,14 +157,14 @@ public class Elevator extends AbstractElevator{
 	}
 	
 	//TODO: change elevator direction
-	public void calculateDirection(HashSet<EventBarrier> up, HashSet<EventBarrier> down){
-		if(up.isEmpty() && down.isEmpty()){
+	public void calculateDirection(Set<EventBarrier> upBarriers, Set<EventBarrier> downBarriers){
+		if(upBarriers.isEmpty() && downBarriers.isEmpty()){
 			direction = Direction.STAGNANT;
 		}
-		else if(direction == Direction.UP && up.isEmpty()){
+		else if(direction == Direction.UP && upBarriers.isEmpty()){
 			direction = Direction.DOWN;
 		}
-		else if(direction == Direction.DOWN && down.isEmpty()){
+		else if(direction == Direction.DOWN && downBarriers.isEmpty()){
 			direction = Direction.UP;
 		}
 		

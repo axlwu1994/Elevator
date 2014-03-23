@@ -16,7 +16,7 @@ public class ElevatorController {
 	private Building onlyBuilding;
 	
 	public ElevatorController(Building building, Elevator e){
-		//TODO: add multpile elevators
+		//TODO: add multiple elevators
 		allElevators = new HashSet<Elevator>();
 		allElevators.add(e);
 		onlyBuilding = building;

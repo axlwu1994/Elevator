@@ -105,6 +105,10 @@ public class Rider extends Thread{
 		destFloor = level;
 	}
 	
+	public int getCurrentFloor() {
+		return currentFloor;
+	}
+	
 	public void run() {
 		if(goingUp) {
 			buttonUp();
@@ -122,6 +126,10 @@ public class Rider extends Thread{
 		else {
 			goingUp = true;
 		}
+	}
+
+	public void setCurrentFloor(int currentFloor2) {
+		currentFloor = 	currentFloor2;	
 	}
 
 	

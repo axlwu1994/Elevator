@@ -3,7 +3,9 @@ import java.util.HashSet;
 
 /**
  * 
+ * @author rtoussaint
  * @author Lyndsay Kerwin
+ * 
  *
  *There is only one building for program.  It knows which floors have their 'up' and 'down' buttons pushed.  If a 
  *floor has its up button pushed, then this floor is added to upBarriers -- same for the 'down' button pushed.
@@ -98,12 +100,12 @@ public class Building extends AbstractBuilding{
 				}
 			}
 			if (!downBarriers.isEmpty()) {
-				for (EventBarrier eb : upBarriers) {
+				for (EventBarrier eb : downBarriers) {
 					myElevatorController.checkDownElevators(eb.getFloor());
 				}
 			}
 			if (!onBarriers.isEmpty()) {
-				for (EventBarrier eb : upBarriers) {
+				for (EventBarrier eb : onBarriers) {
 					myElevatorController.checkOnElevators(eb.getFloor());
 				}
 			}

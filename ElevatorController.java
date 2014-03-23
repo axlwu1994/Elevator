@@ -2,8 +2,9 @@ import java.util.HashSet;
 
 /**
  * 
+ * @author rtoussaint
  * @author Lyndsay Kerwin
- *
+ * 
  */
 
 public class ElevatorController {

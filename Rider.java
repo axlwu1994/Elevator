@@ -1,6 +1,7 @@
 
 /**
  * 
+ * @author rtoussaint
  * @author Lyndsay Kerwin
  * This class takes care of the functionality that is associated with Riders.  Each rider knows what floor it is
  * on, which floor it is on, whether or not it's on an elevator, and its building and event barrier.  In order to

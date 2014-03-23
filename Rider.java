@@ -30,36 +30,25 @@ public class Rider extends Thread{
 		
 	}
 	
-	private void setDirection() {
-		// TODO Auto-generated method stub
-		if(currentFloor > destFloor){
-			goingUp = false;
-		}
-		else {
-			goingUp = true;
-		}
-	}
-
 	/**
 	 * Signal to the program that this rider wants to take an elevator up.  It will wait() until the Elevator wakes
 	 * it up, once it arrives on its floor.
 	 */
 	public void buttonUp(){
-		myBuilding.CallUp(currentFloor); //also reroute the elevator in case it is in progress
+		myBuilding.CallUp(currentFloor); 
 		myBarrier.arrive();
 		
 		for(Elevator elevator : myBuilding.getElevatorController().getElevators()){
-			if(currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() > elevator.getNumPassengers() && elevator.getUpStatus()){
+			if(currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() > elevator.getNumPassengers() && elevator.getDirectionStatus() != Direction.DOWN){
 				elevator.addPassenger(this);
+				onElevator = true;
+				myBarrier.complete();
 			}
-			else if (currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() < elevator.getNumPassengers()  && elevator.getUpStatus()){
+			else if (currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() < elevator.getNumPassengers()  && elevator.getDirectionStatus() != Direction.DOWN){
+				myBarrier.complete();
 				this.buttonUp();
-				this.updateEventBarrier(myBarrier);
 			}
 		}
-		myBarrier.complete();
-		//TODO: if the rider doesn't get on the elevator should the button be pressed again?
-		
 	}
 
 	/**
@@ -71,17 +60,17 @@ public class Rider extends Thread{
 		myBarrier.arrive();
 		
 		for(Elevator elevator : myBuilding.getElevatorController().getElevators()){
-			if(currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() > elevator.getNumPassengers() && !elevator.getUpStatus()){
+			if(currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() > elevator.getNumPassengers() && elevator.getDirectionStatus() != Direction.UP){
 				elevator.addPassenger(this);
+				onElevator = true;
 				myBarrier.complete();
 			}
-			else if (currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() < elevator.getNumPassengers()  && !elevator.getUpStatus()){
+			else if (currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() < elevator.getNumPassengers()  && elevator.getDirectionStatus() != Direction.UP){
+				myBarrier.complete();
 				this.buttonDown();
-				this.updateEventBarrier(myBarrier);
 			}
 		}
 		
-		//TODO: if the rider doesn't get on the elevator should the button be pressed again?
 	}
 	
 	/**
@@ -111,8 +100,9 @@ public class Rider extends Thread{
 	}
 	
 	
-	public void setDestinationFloor(){
+	public void setDestinationFloor(int level){
 		//TODO: implement this method so that a rider can change destination once it rides the elevator
+		destFloor = level;
 	}
 	
 	public void run() {
@@ -123,5 +113,16 @@ public class Rider extends Thread{
 			buttonDown();
 		}
 	}
+	
+	private void setDirection() {
+		// TODO Auto-generated method stub
+		if(currentFloor > destFloor){
+			goingUp = false;
+		}
+		else {
+			goingUp = true;
+		}
+	}
+
 	
 }

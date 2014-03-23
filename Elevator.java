@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.TreeSet;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class Elevator extends AbstractElevator{
 
 	private boolean doorsOpen;
 	private boolean atFloor; //at the current floor
-	private boolean goingUp;
+	private Direction direction;
 
 	private TreeSet<Integer> upRequests;
 	private TreeSet<Integer> downRequests;
@@ -49,10 +50,10 @@ public class Elevator extends AbstractElevator{
 		//loop through people in elevator to see where to go to
 		int val = numFloors;
 		for(Rider currentRider : passengers){
-			if(goingUp && currentRider.getDestinationFloor() < val){
+			if(direction == Direction.UP && currentRider.getDestinationFloor() < val){
 				val = currentRider.getDestinationFloor();
 			}
-			else if(!goingUp){
+			else if(direction == Direction.DOWN){
 				if(val == numFloors){
 					val = 0;
 				}
@@ -74,7 +75,8 @@ public class Elevator extends AbstractElevator{
 	@Override
 	public void VisitFloor(int floor) {
 		//set currentFloor to the correctValue
-		
+		atFloor = true;
+		currentFloor = floor;
 		//wake everyone up on the elevator
 		for(EventBarrier x : controller.getBuilding().getOnBarriers()){
 			if(floor == x.getFloor()){
@@ -84,7 +86,7 @@ public class Elevator extends AbstractElevator{
 		}
 				
 		//raise the event so riders know to wake up
-		if(goingUp){
+		if(direction == Direction.UP){
 			for(EventBarrier curBarrier : controller.getBuilding().getUpBarriers()){
 				if(curBarrier.getFloor() == floor){
 					//tell that floor to wake up and get on the elevator
@@ -95,7 +97,7 @@ public class Elevator extends AbstractElevator{
 				}
 			}
 		}
-		if(!goingUp){
+		if(direction == Direction.DOWN){
 			for(EventBarrier curBarrier : controller.getBuilding().getDownBarriers()){
 				if(curBarrier.getFloor() == floor){
 					//tell that floor to wake up and get on the elevator
@@ -140,8 +142,8 @@ public class Elevator extends AbstractElevator{
 		}
 	}
 	
-	public boolean getUpStatus(){
-		return goingUp;
+	public Direction getDirectionStatus(){
+		return direction;
 	}
 	
 	public int getCurrentFloor(){
@@ -153,8 +155,17 @@ public class Elevator extends AbstractElevator{
 	}
 	
 	//TODO: change elevator direction
-	private void changeDirection(){
-		//the elevator needs to know when to change direction 
+	private void calculateDirection(HashSet<EventBarrier> up, HashSet<EventBarrier> down){
+		if(up.isEmpty() && down.isEmpty()){
+			direction = Direction.STAGNANT;
+		}
+		else if(direction == Direction.UP && up.isEmpty()){
+			direction = Direction.DOWN;
+		}
+		else if(direction == Direction.DOWN && down.isEmpty()){
+			direction = Direction.UP;
+		}
+		
 	}
 	
 	public int getMaxOccupancy(){

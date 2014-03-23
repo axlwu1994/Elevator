@@ -3,6 +3,7 @@ import java.util.HashSet;
 /**
  * 
  * @author rtoussaint
+ * @author Ryan Fishel
  * @author Lyndsay Kerwin
  * 
  */
@@ -14,7 +15,10 @@ public class ElevatorController {
 	
 	private Building onlyBuilding;
 	
-	public ElevatorController(Building building){
+	public ElevatorController(Building building, Elevator e){
+		//TODO: add multpile elevators
+		allElevators = new HashSet<Elevator>();
+		allElevators.add(e);
 		onlyBuilding = building;
 		checkUp = false;
 		checkDown = false;
@@ -61,6 +65,18 @@ public class ElevatorController {
 	
 	protected HashSet<Elevator> getElevators(){
 		return allElevators;
+	}
+	
+	public Elevator chooseElevator(){
+		//TODO: pick which elevator should go
+		Elevator el = null;
+		for(Elevator e : allElevators) {
+			if(e != null) {
+				el = e;
+			}
+		}
+		return el;
+
 	}
 	
 }

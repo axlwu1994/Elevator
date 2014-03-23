@@ -155,7 +155,7 @@ public class Elevator extends AbstractElevator{
 	}
 	
 	//TODO: change elevator direction
-	private void calculateDirection(HashSet<EventBarrier> up, HashSet<EventBarrier> down){
+	public void calculateDirection(HashSet<EventBarrier> up, HashSet<EventBarrier> down){
 		if(up.isEmpty() && down.isEmpty()){
 			direction = Direction.STAGNANT;
 		}
@@ -178,6 +178,10 @@ public class Elevator extends AbstractElevator{
 
 	public void addPassenger(Rider x) {
 		passengers.add(x);	
+	}
+
+	public int getDestinationFloor() {
+		return destinationFloor;
 	}
 	
 }

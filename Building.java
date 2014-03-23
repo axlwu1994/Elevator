@@ -34,7 +34,6 @@ public class Building extends AbstractBuilding{
 	public AbstractElevator CallUp(int fromFloor) {
 		// TODO Auto-generated method stub
 		addUpBarrier(fromFloor);
-		System.out.println("money " + myElevatorController);
 		myElevatorController.checkUpElevators(fromFloor);
 		return null;
 	}

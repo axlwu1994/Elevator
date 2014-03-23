@@ -36,6 +36,7 @@ public class ElevatorController {
 				if(curElevator.getDirectionStatus() != Direction.DOWN && curElevator.getCurrentFloor() < rerouteFloor){
 					//the elevator is going up so reroute to new floor
 					curElevator.setDestinationFloor(rerouteFloor);
+					//TODO: Ryan Thought: return the elevator id all the way back to the rider.
 					checkUp = true;
 				}
 			}

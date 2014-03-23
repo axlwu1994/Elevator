@@ -37,8 +37,11 @@ public class Rider extends Thread{
 	 * it up, once it arrives on its floor.
 	 */
 	public void buttonUp(){
-		myBuilding.CallUp(currentFloor); 
+		myBuilding.CallUp(currentFloor);
+		//TODO: Ryan Thought: here we should know which elevator is coming so we can get rid of for-loop
 		myBarrier.arrive();
+		
+		//TODO: Ryan Thought: use the id above to see if the passenger can fit into the elevator.
 		
 		for(Elevator elevator : myBuilding.getElevatorController().getElevators()){
 			if(currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() > elevator.getNumPassengers() && elevator.getDirectionStatus() != Direction.DOWN){
@@ -60,6 +63,8 @@ public class Rider extends Thread{
 	public void buttonDown(){
 		myBuilding.CallDown(currentFloor);
 		myBarrier.arrive();
+		
+		//TODO: Ryan Thought: Do we need this or can we use elevator id??
 		
 		for(Elevator elevator : myBuilding.getElevatorController().getElevators()){
 			if(currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() > elevator.getNumPassengers() && elevator.getDirectionStatus() != Direction.UP){

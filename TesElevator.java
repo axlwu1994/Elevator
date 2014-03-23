@@ -19,7 +19,7 @@ public class TesElevator {
 		building.setElevatorController(ec);
 		
 		r1.start();
-		r1.run();
+		//r1.run();
 		assertEquals(2, r1.getDestinationFloor());
 		
 		try {

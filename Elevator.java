@@ -134,6 +134,7 @@ public class Elevator extends AbstractElevator{
 		for(Rider x : passengers){
 			if(x.getDestinationFloor() == currentFloor){
 				numOfRiders--;
+				x.setCurrentFloor(currentFloor);
 				controller.getBuilding().getOnBarriers().remove(x);
 				/*now this 'rider' is off the elevator but just staying on the floor -- it will need to 'callUp' 
 				 * or 'callDown' in order to get back on.

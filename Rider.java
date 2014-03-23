@@ -3,6 +3,8 @@
  * 
  * @author rtoussaint
  * @author Lyndsay Kerwin
+ * @author Ryan Fishel
+ * @author Carlos Reyes
  * This class takes care of the functionality that is associated with Riders.  Each rider knows what floor it is
  * on, which floor it is on, whether or not it's on an elevator, and its building and event barrier.  In order to
  * get on an elevator, the rider has to signal but calling buttonUp or buttonDown.
@@ -22,8 +24,8 @@ public class Rider extends Thread{
 	
 	
 	public Rider(Building building, int presentFloor, int destination){
-		Building myBuilding = building;
-		EventBarrier myBarrier = new EventBarrier();
+		this.myBuilding = building;
+		this.myBarrier = new EventBarrier();
 		currentFloor = presentFloor;
 		destFloor = destination;
 		setDirection();
@@ -35,6 +37,9 @@ public class Rider extends Thread{
 	 * it up, once it arrives on its floor.
 	 */
 	public void buttonUp(){
+		
+		System.out.println(myBuilding + " " + currentFloor);
+		System.out.println("\n");
 		myBuilding.CallUp(currentFloor); 
 		myBarrier.arrive();
 		
@@ -105,6 +110,10 @@ public class Rider extends Thread{
 		destFloor = level;
 	}
 	
+	public int getCurrentFloor() {
+		return currentFloor;
+	}
+	
 	public void run() {
 		if(goingUp) {
 			buttonUp();
@@ -122,6 +131,10 @@ public class Rider extends Thread{
 		else {
 			goingUp = true;
 		}
+	}
+
+	public void setCurrentFloor(int currentFloor2) {
+		currentFloor = 	currentFloor2;	
 	}
 
 	

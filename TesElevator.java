@@ -31,7 +31,6 @@ public class TesElevator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(r1.getCurrentFloor());
 		assertEquals(7, r1.getCurrentFloor());
 		//assertEquals(e.getDirectionStatus(), Direction.STAGNANT);
 		

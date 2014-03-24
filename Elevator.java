@@ -20,8 +20,8 @@ public class Elevator extends AbstractElevator{
 	
 	private int numOfRiders;
 	
-	List<Rider> passengers;
-	List<Rider> peopleBoarding;
+	private List<Rider> passengers;
+	private List<Rider> peopleBoarding;
 	
 	private int currentFloor;
 	
@@ -50,7 +50,6 @@ public class Elevator extends AbstractElevator{
 
 	@Override
 	public void ClosedDoors() {
-		// TODO Auto-generated method stub
 		//choose floor to go to
 		//loop through people in elevator to see where to go to
 		int val = numFloors;
@@ -69,7 +68,6 @@ public class Elevator extends AbstractElevator{
 			}	
 		}
 		destinationFloor = val;
-		//TODO: go to this Floor
 		
 	}
 
@@ -160,21 +158,33 @@ public class Elevator extends AbstractElevator{
 	public void setDestinationFloorAndChangeDirection(int floor){
 		int oldFloor = destinationFloor;
 		destinationFloor = floor;
-		
-		if (destinationFloor > oldFloor) {
-			direction = Direction.UP;
-		}
-		else if (destinationFloor < oldFloor) {
-			direction = Direction.DOWN;
-		}
-		else {
-			direction = Direction.STAGNANT;
-		}
+//		
+//		if (destinationFloor > oldFloor) {
+//			direction = Direction.UP;
+//		}
+//		else if (destinationFloor < oldFloor) {
+//			direction = Direction.DOWN;
+//		}
+//		else {
+//			direction = Direction.STAGNANT;
+//		}
 		
 	}
 	
-	//TODO: change elevator direction
-	public void calculateDirection(Set<EventBarrier> upBarriers, Set<EventBarrier> downBarriers){
+	public void calculateDirection(Set<EventBarrier> upBarriers, Set<EventBarrier> downBarriers, List<Rider> riders){
+		if(!riders.isEmpty()) {
+			for(Rider r : riders){
+				if(r.getDirection()) {
+					direction = Direction.UP;
+				}
+				else if(!r.getDirection()) {
+					direction = Direction.DOWN;
+				}
+				 break;
+			}
+			return;
+		}
+		
 		if(upBarriers.isEmpty() && downBarriers.isEmpty()){
 			direction = Direction.STAGNANT;
 		}
@@ -211,6 +221,10 @@ public class Elevator extends AbstractElevator{
 	}
 	public void setController(ElevatorController ec) {
 		controller = ec;
+	}
+
+	public List<Rider> getPassengers() {
+		return passengers;
 	}
 	
 }

@@ -22,11 +22,11 @@ public class Building extends AbstractBuilding{
 
 	public Building(int numFloors, int numElevators) {
 		super(numFloors, numElevators);
-		
+
 		upBarriers = Collections.newSetFromMap(new ConcurrentHashMap<EventBarrier, Boolean>());
 		downBarriers = Collections.newSetFromMap(new ConcurrentHashMap<EventBarrier, Boolean>());
 		onBarriers = Collections.newSetFromMap(new ConcurrentHashMap<EventBarrier, Boolean>());
-		
+
 		// TODO Auto-generated constructor stub
 	}
 
@@ -50,7 +50,7 @@ public class Building extends AbstractBuilding{
 	public void addOnBarriers(EventBarrier eb){
 		onBarriers.add(eb);
 	}
-	
+
 	/**
 	 * Using the floor level, create an event barrier and add it to the UP list.
 	 * @param curFloor 
@@ -104,11 +104,8 @@ public class Building extends AbstractBuilding{
 		int i = 0;
 		while (i < 1000) {
 			Elevator elevator = myElevatorController.chooseElevator();
-			//TODO: max or min floors
-			if(onBarriers.isEmpty()) {
-				elevator.calculateDirection(upBarriers, downBarriers);
-			}
-			else if(elevator.getDirectionStatus() != Direction.DOWN) {
+			elevator.calculateDirection(upBarriers, downBarriers, elevator.getPassengers());
+			if(elevator.getDirectionStatus() != Direction.DOWN) {
 				int rerouteFloor = numFloors;
 				for(EventBarrier eb : upBarriers){
 					if(eb.getFloor() < rerouteFloor && eb.getFloor() > elevator.getCurrentFloor()){
@@ -118,9 +115,9 @@ public class Building extends AbstractBuilding{
 				}
 				myElevatorController.checkUpElevators(rerouteFloor);
 			}
-			
+
 			else if(elevator.getDirectionStatus() != Direction.UP) {
-				int rerouteFloor =0;
+				int rerouteFloor = 0;
 				for(EventBarrier eb : downBarriers){
 					if(eb.getFloor() > rerouteFloor && eb.getFloor() < elevator.getCurrentFloor()){
 						rerouteFloor = eb.getFloor();
@@ -129,8 +126,9 @@ public class Building extends AbstractBuilding{
 				}
 				myElevatorController.checkDownElevators(rerouteFloor);
 			}
-			
+			if(elevator.getDirectionStatus() != Direction.STAGNANT) {
 			elevator.VisitFloor(elevator.getDestinationFloor());
+			}
 			i++;
 		}
 	}
@@ -153,7 +151,7 @@ public class Building extends AbstractBuilding{
 
 	public void setElevatorController(ElevatorController ec) {
 		this.myElevatorController = ec;
-		
+
 	}
 
 }

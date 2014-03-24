@@ -49,11 +49,11 @@ public class TestMultipleRiders {
 		upBar1.setFloor(2);
 		
 		EventBarrier upBar2 = new EventBarrier();
-		upBar2.setFloor(3);
+		upBar2.setFloor(2);
 		
-		Rider r1 = new Rider(building, 2, 7, upBar1);
+		Rider r1 = new Rider(building, 2, 8, upBar1);
 		
-		Rider r2 = new Rider(building, 3, 7, upBar2);
+		Rider r2 = new Rider(building, 2, 7, upBar2);
 		
 		r1.start();
 		r2.start();
@@ -67,7 +67,7 @@ public class TestMultipleRiders {
 			e.printStackTrace();
 		}
 		
-		assertEquals(7, r1.getCurrentFloor());
+		assertEquals(8, r1.getCurrentFloor());
 		assertEquals(7, r2.getCurrentFloor());	
 	}
 

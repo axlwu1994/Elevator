@@ -49,8 +49,8 @@ public class Rider extends Thread{
 				EventBarrier onBarrier = new EventBarrier();
 				onBarrier.setFloor(destFloor);
 				myBuilding.removeUpBarrier(currentFloor);
-				myBuilding.addOnBarriers(onBarrier);	
-
+				myBuilding.addOnBarriers(onBarrier);
+				
 				elevator.addPassenger(this);
 				onElevator = true;
 				myBarrier.complete();
@@ -157,6 +157,10 @@ public class Rider extends Thread{
 
 	public EventBarrier getEventBarrier() {
 		return this.myBarrier;
+	}
+
+	public boolean getDirection() {
+		return goingUp;
 	}
 
 	

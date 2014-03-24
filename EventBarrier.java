@@ -99,8 +99,6 @@ public class EventBarrier extends AbstractEventBarrier{
 	
 	@Override
     public int hashCode() {
-		int hash = 17;
-		hash += 13*myFloor;
 		return myFloor;
 	}
 	

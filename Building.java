@@ -46,6 +46,11 @@ public class Building extends AbstractBuilding{
 		return null;
 	}
 
+
+	public void addOnBarriers(EventBarrier eb){
+		onBarriers.add(eb);
+	}
+	
 	/**
 	 * Using the floor level, create an event barrier and add it to the UP list.
 	 * @param curFloor 
@@ -95,7 +100,7 @@ public class Building extends AbstractBuilding{
 	/**
 	 * TODO: Make elevator run
 	 */
-	public void runElevatorLoop () {
+	public synchronized void runElevatorLoop () {
 		int i = 0;
 		while (i < 1000) {
 			Elevator elevator = myElevatorController.chooseElevator();

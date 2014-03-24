@@ -80,7 +80,7 @@ public class Elevator extends AbstractElevator{
 	 * leave during transit
 	 */
 	@Override
-	public void VisitFloor(int floor) {
+	public synchronized void VisitFloor(int floor) {
 		//set currentFloor to the correctValue
 		atFloor = true;
 		currentFloor = floor;
@@ -137,12 +137,13 @@ public class Elevator extends AbstractElevator{
 	}
 	
 	
-	private void subtractRiders(){
+	private synchronized void subtractRiders(){
 		for(Rider x : passengers){
 			if(x.getDestinationFloor() == currentFloor){
 				numOfRiders--;
 				x.setCurrentFloor(currentFloor);
-				controller.getBuilding().getOnBarriers().remove(x);
+				controller.getBuilding().getOnBarriers().remove(x.getEventBarrier());
+				passengers.remove(x);
 				/*now this 'rider' is off the elevator but just staying on the floor -- it will need to 'callUp' 
 				 * or 'callDown' in order to get back on.
 				 */

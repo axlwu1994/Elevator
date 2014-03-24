@@ -45,9 +45,18 @@ public class Rider extends Thread{
 		
 		for(Elevator elevator : myBuilding.getElevatorController().getElevators()){
 			if(currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() > elevator.getNumPassengers() && elevator.getDirectionStatus() != Direction.DOWN){
+				
+				EventBarrier onBarrier = new EventBarrier();
+				onBarrier.setFloor(destFloor);
+				myBuilding.removeUpBarrier(currentFloor);
+				myBuilding.addOnBarriers(onBarrier);	
+
+				
 				elevator.addPassenger(this);
 				onElevator = true;
 				myBarrier.complete();
+				updateEventBarrier(onBarrier);
+
 			}
 			else if (currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() < elevator.getNumPassengers()  && elevator.getDirectionStatus() != Direction.DOWN){
 				myBarrier.complete();
@@ -68,6 +77,13 @@ public class Rider extends Thread{
 		
 		for(Elevator elevator : myBuilding.getElevatorController().getElevators()){
 			if(currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() > elevator.getNumPassengers() && elevator.getDirectionStatus() != Direction.UP){
+				
+				EventBarrier onBarrier = new EventBarrier();
+				onBarrier.setFloor(destFloor);
+				myBuilding.removeDownBarrier(currentFloor);
+				myBuilding.addOnBarriers(onBarrier);
+				updateEventBarrier(onBarrier);
+				
 				elevator.addPassenger(this);
 				onElevator = true;
 				myBarrier.complete();
@@ -138,6 +154,10 @@ public class Rider extends Thread{
 
 	public void setCurrentFloor(int currentFloor2) {
 		currentFloor = 	currentFloor2;	
+	}
+
+	public EventBarrier getEventBarrier() {
+		return this.myBarrier;
 	}
 
 	

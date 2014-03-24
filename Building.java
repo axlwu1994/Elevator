@@ -39,10 +39,10 @@ public class Building extends AbstractBuilding{
 	}
 
 	@Override
-	public Elevator CallDown(int fromFloor) {
+	public Elevator CallDown(EventBarrier eb) {
 		// TODO Auto-generated method stub
-		addDownBarrier(fromFloor);
-		Elevator reRoutedElevator = myElevatorController.checkDownElevators(fromFloor);
+		addDownBarrier(eb);
+		Elevator reRoutedElevator = myElevatorController.checkDownElevators(eb.getFloor());
 		return reRoutedElevator;
 	}
 
@@ -52,44 +52,40 @@ public class Building extends AbstractBuilding{
 	 */
 	public void addUpBarrier(EventBarrier eb){
 		upBarriers.add(eb);
-		//TODO: hashing method
+		
+	}
+	
+	
+	public void addOnBarrier(EventBarrier eb){
+		onBarriers.add(eb);
+	}
+	
+	public void removeOnBarrier(EventBarrier eb){
+		onBarriers.remove(eb);
 	}
 
 	/**
 	 * Using the floor level, create an event barrier and add it to the DOWN list.
 	 * @param curFloor 
 	 */
-	public void addDownBarrier(int curFloor){
-		EventBarrier myBarrier = new EventBarrier();
-		myBarrier.setFloor(curFloor);
-
-		downBarriers.add(myBarrier);
+	public void addDownBarrier(EventBarrier eb){
+		downBarriers.add(eb);
 	}
 
 	/**
 	 * Once the elevator comes and picks up the riders, remove this floor from the UpBarrier list.
 	 * @param floor
 	 */
-	public void removeUpBarrier(int floor){
-		for(EventBarrier myBarrier : upBarriers){
-			if(myBarrier.getFloor() == floor){
-				upBarriers.remove(myBarrier);
-				break;
-			}
-		}		
+	public void removeUpBarrier(EventBarrier eb){
+		upBarriers.remove(eb);		
 	}
 
 	/**
 	 * Once the elevator comes and picks up the riders, remove this floor from the DownBarrier list.
 	 * @param floor
 	 */
-	public void removeDownBarrier(int floor){
-		for(EventBarrier myBarrier : downBarriers){
-			if(myBarrier.getFloor() == floor){
-				downBarriers.remove(myBarrier);
-				break;
-			}
-		}
+	public void removeDownBarrier(EventBarrier eb){
+		downBarriers.remove(eb);
 	}
 
 	/**

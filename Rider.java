@@ -39,6 +39,8 @@ public class Rider extends Thread{
 			newElevator.addPassenger(this);
 			onElevator = true;
 			goingUp = true;
+			myBuilding.addOnBarrier(myBarrier);
+			myBuilding.removeUpBarrier(myBarrier);
 			myBarrier.complete();
 		}
 		else if(newElevator != null && currentFloor == newElevator.getCurrentFloor() && newElevator.getMaxOccupancy() < newElevator.getNumPassengers()  && newElevator.getDirectionStatus() != Direction.DOWN){
@@ -53,13 +55,15 @@ public class Rider extends Thread{
 	 * it up, once it arrives on its floor.
 	 */
 	public void buttonDown(){
-		Elevator newElevator = myBuilding.CallDown(currentFloor);
+		Elevator newElevator = myBuilding.CallDown(myBarrier);
 		myBarrier.arrive();
 
 		if(newElevator != null && currentFloor == newElevator.getCurrentFloor() && newElevator.getMaxOccupancy() > newElevator.getNumPassengers() && newElevator.getDirectionStatus() != Direction.UP){
 			newElevator.addPassenger(this);
 			onElevator = true;
 			goingUp = false;
+			myBuilding.addOnBarrier(myBarrier);
+			myBuilding.removeDownBarrier(myBarrier);
 			myBarrier.complete();
 		}
 		else if (newElevator != null && currentFloor == newElevator.getCurrentFloor() && newElevator.getMaxOccupancy() < newElevator.getNumPassengers()  && newElevator.getDirectionStatus() != Direction.UP){

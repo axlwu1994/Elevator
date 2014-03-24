@@ -99,7 +99,7 @@ public class Building extends AbstractBuilding{
 	 */
 	public synchronized void runElevatorLoop () {
 		int i = 0;
-		while (i < 1000) {
+		while (i<1000) {
 			//TODO: Ryan Thought: Should this be 1000 or should we change to something generic 
 			Elevator elevator = myElevatorController.chooseElevator();
 			//TODO: Thought: Is chooseElevator just picking a non-null elevator --we should put more logic in there

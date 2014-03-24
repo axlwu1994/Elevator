@@ -37,7 +37,7 @@ public class Rider extends Thread{
 	 * it up, once it arrives on its floor.
 	 */
 	public void buttonUp(){
-		myBuilding.CallUp(currentFloor); 
+		myBuilding.CallUp(myBarrier); 
 		myBarrier.arrive();
 		
 		for(Elevator elevator : myBuilding.getElevatorController().getElevators()){
@@ -111,6 +111,7 @@ public class Rider extends Thread{
 		return currentFloor;
 	}
 	
+	@Override
 	public void run() {
 		if(goingUp) {
 			buttonUp();

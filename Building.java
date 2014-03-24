@@ -31,11 +31,10 @@ public class Building extends AbstractBuilding{
 	}
 
 	@Override
-	public AbstractElevator CallUp(int fromFloor) {
+	public AbstractElevator CallUp(EventBarrier eb) {
 		// TODO Auto-generated method stub
-		addUpBarrier(fromFloor);
-		System.out.println("money " + myElevatorController);
-		myElevatorController.checkUpElevators(fromFloor);
+		addUpBarrier(eb);
+		myElevatorController.checkUpElevators(eb.getFloor());
 		return null;
 	}
 
@@ -51,11 +50,8 @@ public class Building extends AbstractBuilding{
 	 * Using the floor level, create an event barrier and add it to the UP list.
 	 * @param curFloor 
 	 */
-	public void addUpBarrier(int curFloor){
-
-		EventBarrier myBarrier = new EventBarrier();
-		myBarrier.setFloor(curFloor);
-		upBarriers.add(myBarrier);
+	public void addUpBarrier(EventBarrier eb){
+		upBarriers.add(eb);
 		//TODO: hashing method
 	}
 
@@ -100,7 +96,8 @@ public class Building extends AbstractBuilding{
 	 * TODO: Make elevator run
 	 */
 	public void runElevatorLoop () {
-		while (true) {
+		int i = 0;
+		while (i < 1000) {
 			Elevator elevator = myElevatorController.chooseElevator();
 			//TODO: max or min floors
 			if(onBarriers.isEmpty()) {
@@ -127,7 +124,7 @@ public class Building extends AbstractBuilding{
 			}
 			
 			elevator.VisitFloor(elevator.getDestinationFloor());
-
+			i++;
 		}
 	}
 

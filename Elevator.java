@@ -17,8 +17,8 @@ public class Elevator extends AbstractElevator{
 	private boolean atFloor; //at the current floor
 	private Direction direction;
 
-	private TreeSet<Integer> upRequests;
-	private TreeSet<Integer> downRequests;
+//	private TreeSet<Integer> upRequests;
+//	private TreeSet<Integer> downRequests;
 	
 	private int numOfRiders;
 	
@@ -34,8 +34,14 @@ public class Elevator extends AbstractElevator{
 	
 	public Elevator(int numFloors, int elevatorId, int maxOccupancyThreshold) {
 		super(numFloors, elevatorId, maxOccupancyThreshold);
-
-			
+		numOfRiders = 0;
+		passengers = new ArrayList<Rider>();
+		peopleBoarding = new ArrayList<Rider>();
+		currentFloor = 0;
+		destinationFloor = 0;
+		doorsOpen = false;
+		atFloor = false;
+		direction = Direction.STAGNANT;
 	}
 
 	@Override
@@ -184,6 +190,9 @@ public class Elevator extends AbstractElevator{
 
 	public int getDestinationFloor() {
 		return destinationFloor;
+	}
+	public void setController(ElevatorController ec) {
+		controller = ec;
 	}
 	
 }

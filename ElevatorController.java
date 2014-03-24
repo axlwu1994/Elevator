@@ -33,7 +33,7 @@ public class ElevatorController {
 	protected synchronized void checkUpElevators(int rerouteFloor) {
 		if(!checkUp){
 			for(Elevator curElevator : allElevators){
-				if(curElevator.getDirectionStatus() != Direction.DOWN && curElevator.getCurrentFloor() < rerouteFloor){
+				if(curElevator.getDirectionStatus() != Direction.DOWN && curElevator.getCurrentFloor() <= rerouteFloor){
 					//the elevator is going up so reroute to new floor
 					curElevator.setDestinationFloor(rerouteFloor);
 					checkUp = true;
@@ -46,7 +46,7 @@ public class ElevatorController {
 	protected synchronized void checkDownElevators(int rerouteFloor) {
 		if(!checkDown){
 			for(Elevator curElevator : allElevators){
-				if(curElevator.getDirectionStatus() != Direction.UP && curElevator.getCurrentFloor() > rerouteFloor){
+				if(curElevator.getDirectionStatus() != Direction.UP && curElevator.getCurrentFloor() >= rerouteFloor){
 					//the elevator is going up so reroute to new floor
 					curElevator.setDestinationFloor(rerouteFloor);
 					checkDown = true;

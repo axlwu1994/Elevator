@@ -71,6 +71,10 @@ public class ElevatorController {
 		return allElevators;
 	}
 	
+	public void addElevator(Elevator e) {
+		allElevators.add(e);
+	}
+	
 	public Elevator chooseElevator(){
 		//TODO: pick which elevator should go
 		Elevator el = null;

@@ -1,5 +1,7 @@
+import java.util.Collections;
 import java.util.Set;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
@@ -9,7 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  */
 
-public class Elevator extends AbstractElevator{
+public class Elevator extends AbstractElevator implements Runnable {
 
 	private boolean doorsOpen;
 	private boolean atFloor; //at the current floor
@@ -29,6 +31,9 @@ public class Elevator extends AbstractElevator{
 	
 	private ElevatorController controller;
 	
+	private int rangeBottomFloor;
+	private int rangeTopFloor;
+	
 	
 	public Elevator(int numFloors, int elevatorId, int maxOccupancyThreshold) {
 		super(numFloors, elevatorId, maxOccupancyThreshold);
@@ -40,6 +45,8 @@ public class Elevator extends AbstractElevator{
 		doorsOpen = false;
 		atFloor = false;
 		direction = Direction.STAGNANT;
+		rangeBottomFloor = 0;
+		rangeTopFloor = numFloors;
 	}
 
 	@Override
@@ -266,5 +273,71 @@ public class Elevator extends AbstractElevator{
 	public List<Rider> getPassengers() {
 		return passengers;
 	}
-	
+
+	@Override
+	public void run() {
+		int i = 0;
+		while (i < 1000) {
+			Set<EventBarrier> upBarriers = Collections.newSetFromMap(new ConcurrentHashMap<EventBarrier, Boolean>());
+			Set<EventBarrier> downBarriers = Collections.newSetFromMap(new ConcurrentHashMap<EventBarrier, Boolean>());
+			
+			for (EventBarrier upBar : controller.getBuilding().getUpBarriers()) {
+				int floor = upBar.getFloor();
+				if (floor <= rangeTopFloor && floor >= rangeBottomFloor) {
+					upBarriers.add(upBar);
+				}
+			}
+			for (EventBarrier downBar : controller.getBuilding().getDownBarriers()) {
+				int floor = downBar.getFloor();
+				if (floor <= rangeTopFloor && floor >= rangeBottomFloor) {
+					downBarriers.add(downBar);
+				}
+			}
+			
+			this.calculateDirection(upBarriers, downBarriers, this.getPassengers());
+
+			if(this.getDirectionStatus() != Direction.DOWN) {
+				int rerouteFloor = numFloors;
+				for(EventBarrier eb : upBarriers){
+					if(eb.getFloor() < rerouteFloor && eb.getFloor() > this.getCurrentFloor()){
+						rerouteFloor = eb.getFloor();
+						if(this.getMaxOccupancy() > this.getNumPassengers()) {
+							this.setDestinationFloorAndChangeDirection(rerouteFloor);
+						}
+					}
+				}
+				controller.findClosestUpElevator(rerouteFloor);
+			}
+
+			else if(this.getDirectionStatus() != Direction.UP) {
+				int rerouteFloor = 0;
+				for(EventBarrier eb : downBarriers){
+					if(eb.getFloor() > rerouteFloor && eb.getFloor() < this.getCurrentFloor()){
+						rerouteFloor = eb.getFloor();
+						if(this.getMaxOccupancy() > this.getNumPassengers()) {
+							this.setDestinationFloorAndChangeDirection(rerouteFloor);
+						}
+					}
+				}
+				controller.findClosestDownElevator(rerouteFloor);
+			}
+			if(this.getDirectionStatus() != Direction.STAGNANT) {
+				this.VisitFloor(this.getDestinationFloor());
+			}
+			i++;
+		}		
+	}
+
+	public int getRangeBottomFloor() {
+		return rangeBottomFloor;
+	}
+
+	public int getRangeTopFloor() {
+		return rangeTopFloor;
+	}
+
+	public void setRange(int bottomFloor, int topFloor) {
+		this.rangeBottomFloor = bottomFloor;
+		this.rangeTopFloor = topFloor;
+	}
 }

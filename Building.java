@@ -29,9 +29,7 @@ public class Building extends AbstractBuilding{
 	}
 
 	@Override
-	public AbstractElevator CallUp(EventBarrier eb) {
-		// TODO Auto-generated method stub
-		
+	public AbstractElevator CallUp(EventBarrier eb) {		
 		//TODO: Ryan Thought: have this return elevator from checkUpElevators()
 		addUpBarrier(eb);
 		myElevatorController.findClosestUpElevator(eb.getFloor());
@@ -91,48 +89,6 @@ public class Building extends AbstractBuilding{
 				downBarriers.remove(myBarrier);
 				break;
 			}
-		}
-	}
-
-	/**
-	 * TODO: Make elevator run
-	 */
-	public synchronized void runElevatorLoop () {
-		int i = 0;
-		while (i < 1000) {
-			//TODO: Ryan Thought: Should this be 1000 or should we change to something generic 
-			Elevator elevator = myElevatorController.chooseElevator();
-			//TODO: Thought: Is chooseElevator just picking a non-null elevator --we should put more logic in there
-			elevator.calculateDirection(upBarriers, downBarriers, elevator.getPassengers());
-			if(elevator.getDirectionStatus() != Direction.DOWN) {
-				int rerouteFloor = numFloors;
-				for(EventBarrier eb : upBarriers){
-					if(eb.getFloor() < rerouteFloor && eb.getFloor() > elevator.getCurrentFloor()){
-						rerouteFloor = eb.getFloor();
-						if(elevator.getMaxOccupancy() > elevator.getNumPassengers()) {
-							elevator.setDestinationFloorAndChangeDirection(rerouteFloor);
-						}
-					}
-				}
-				myElevatorController.findClosestUpElevator(rerouteFloor);
-			}
-
-			else if(elevator.getDirectionStatus() != Direction.UP) {
-				int rerouteFloor = 0;
-				for(EventBarrier eb : downBarriers){
-					if(eb.getFloor() > rerouteFloor && eb.getFloor() < elevator.getCurrentFloor()){
-						rerouteFloor = eb.getFloor();
-						if(elevator.getMaxOccupancy() > elevator.getNumPassengers()) {
-							elevator.setDestinationFloorAndChangeDirection(rerouteFloor);
-						}
-					}
-				}
-				myElevatorController.findClosestDownElevator(rerouteFloor);
-			}
-			if(elevator.getDirectionStatus() != Direction.STAGNANT) {
-				elevator.VisitFloor(elevator.getDestinationFloor());
-			}
-			i++;
 		}
 	}
 

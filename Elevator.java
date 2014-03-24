@@ -188,10 +188,10 @@ public class Elevator extends AbstractElevator{
 		if(upBarriers.isEmpty() && downBarriers.isEmpty()){
 			direction = Direction.STAGNANT;
 		}
-		else if(direction == Direction.UP && upBarriers.isEmpty()){
+		else if(direction == Direction.UP && (upBarriers.isEmpty() || aboveTopOfUpBarriers(upBarriers))){
 			direction = Direction.DOWN;
 		}
-		else if(direction == Direction.DOWN && downBarriers.isEmpty()){
+		else if(direction == Direction.DOWN && (downBarriers.isEmpty() || belowBottomOfDownBarriers(downBarriers))){
 			direction = Direction.UP;
 		}
 		else if (direction == Direction.STAGNANT && !upBarriers.isEmpty()) {
@@ -203,12 +203,52 @@ public class Elevator extends AbstractElevator{
 		
 	}
 	
+	private boolean aboveTopOfUpBarriers(Set<EventBarrier> upBarriers) {
+		int highestFloor = findHighestBarrier(upBarriers);
+		if (highestFloor < currentFloor) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	private boolean belowBottomOfDownBarriers(Set<EventBarrier> downBarriers) {
+		int lowestFloor = findLowestBarrier(downBarriers);
+		if (currentFloor < lowestFloor) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	private int findHighestBarrier(Set<EventBarrier> upBarriers) {
+		int highest = 0;
+		for (EventBarrier eb : upBarriers) {
+			if (eb.getFloor() > highest) {
+				highest = eb.getFloor();
+			}
+		}
+		return highest;
+	}
+	
+	private int findLowestBarrier(Set<EventBarrier> downBarriers) {
+		int lowest = this.numFloors;
+		for (EventBarrier eb : downBarriers) {
+			if (eb.getFloor() < lowest) {
+				lowest = eb.getFloor();
+			}
+		}
+		return lowest;
+	}
+
 	public int getMaxOccupancy(){
 		return maxOccupancyThreshold;
 	}
 	
 	public int getNumPassengers(){
-		return passengers.size();
+		return numOfRiders;
 	}
 
 	public void addPassenger(Rider x) {

@@ -107,7 +107,9 @@ public class Building extends AbstractBuilding{
 				for(EventBarrier eb : upBarriers){
 					if(eb.getFloor() < rerouteFloor && eb.getFloor() > elevator.getCurrentFloor()){
 						rerouteFloor = eb.getFloor();
-						elevator.setDestinationFloorAndChangeDirection(rerouteFloor);
+						if(elevator.getMaxOccupancy() > elevator.getNumPassengers()) {
+							elevator.setDestinationFloorAndChangeDirection(rerouteFloor);
+						}
 					}
 				}
 				myElevatorController.checkUpElevators(rerouteFloor);
@@ -118,13 +120,15 @@ public class Building extends AbstractBuilding{
 				for(EventBarrier eb : downBarriers){
 					if(eb.getFloor() > rerouteFloor && eb.getFloor() < elevator.getCurrentFloor()){
 						rerouteFloor = eb.getFloor();
-						elevator.setDestinationFloorAndChangeDirection(rerouteFloor);
+						if(elevator.getMaxOccupancy() > elevator.getNumPassengers()) {
+							elevator.setDestinationFloorAndChangeDirection(rerouteFloor);
+						}
 					}
 				}
 				myElevatorController.checkDownElevators(rerouteFloor);
 			}
 			if(elevator.getDirectionStatus() != Direction.STAGNANT) {
-			elevator.VisitFloor(elevator.getDestinationFloor());
+				elevator.VisitFloor(elevator.getDestinationFloor());
 			}
 			i++;
 		}

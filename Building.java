@@ -39,10 +39,10 @@ public class Building extends AbstractBuilding{
 	}
 
 	@Override
-	public AbstractElevator CallDown(int fromFloor) {
+	public AbstractElevator CallDown(EventBarrier eb) {
 		// TODO Auto-generated method stub
-		addDownBarrier(fromFloor);
-		myElevatorController.checkDownElevators(fromFloor);
+		addDownBarrier(eb);
+		myElevatorController.checkDownElevators(eb.getFloor());
 		return null;
 	}
 
@@ -64,11 +64,8 @@ public class Building extends AbstractBuilding{
 	 * Using the floor level, create an event barrier and add it to the DOWN list.
 	 * @param curFloor 
 	 */
-	public void addDownBarrier(int curFloor){
-		EventBarrier myBarrier = new EventBarrier();
-		myBarrier.setFloor(curFloor);
-
-		downBarriers.add(myBarrier);
+	public void addDownBarrier(EventBarrier eb){
+		downBarriers.add(eb);
 	}
 
 	/**

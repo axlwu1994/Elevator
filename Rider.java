@@ -69,7 +69,7 @@ public class Rider extends Thread{
 	 * it up, once it arrives on its floor.
 	 */
 	public void buttonDown(){
-		myBuilding.CallDown(currentFloor);
+		myBuilding.CallDown(myBarrier);
 		myBarrier.arrive();
 		
 		//TODO: Ryan Thought: Do we need this or can we use elevator id??
@@ -81,11 +81,12 @@ public class Rider extends Thread{
 				onBarrier.setFloor(destFloor);
 				myBuilding.removeDownBarrier(currentFloor);
 				myBuilding.addOnBarriers(onBarrier);
-				updateEventBarrier(onBarrier);
+				
 				
 				elevator.addPassenger(this);
 				onElevator = true;
 				myBarrier.complete();
+				updateEventBarrier(onBarrier);
 			}
 			else if (currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() < elevator.getNumPassengers()  && elevator.getDirectionStatus() != Direction.UP){
 				myBarrier.complete();

@@ -15,12 +15,9 @@ public class Elevator extends AbstractElevator{
 
 	private boolean doorsOpen;
 	private boolean atFloor; //at the current floor
+	//TODO: Delete atFloor???
 	private Direction direction;
-
-//	private TreeSet<Integer> upRequests;
-//	private TreeSet<Integer> downRequests;
-	
-	private int numOfRiders;
+	private int numOfRiders; //TODO: Delete????
 	
 	List<Rider> passengers;
 	List<Rider> peopleBoarding;
@@ -46,76 +43,84 @@ public class Elevator extends AbstractElevator{
 
 	@Override
 	public void OpenDoors() {
+		//TODO: Delete this method????
 		//Not used
 		//people get out and new members get in --> close doors
+		
+		//raise the event so riders know to wake up
+		if(direction == Direction.UP){
+			for(EventBarrier curBarrier : controller.getBuilding().getUpBarriers()){
+				if(curBarrier.getFloor() == currentFloor){
+					curBarrier.raise(); //wake up all the people on this floor that want to go up
+				}
+			}
+		}
+		if(direction == Direction.DOWN){
+			for(EventBarrier curBarrier : controller.getBuilding().getDownBarriers()){
+				if(curBarrier.getFloor() == currentFloor){
+					curBarrier.raise();
+				}
+			}
+		}	
 	}
 
 	@Override
-	public void ClosedDoors() {
-		// TODO Auto-generated method stub
-		//choose floor to go to
-		//loop through people in elevator to see where to go to
+	public void ClosedDoors() {		
+		destinationFloor = findNextStop();
+		//TODO: go to this Floor
+		
+	}
+	
+	public int findNextStop(){
 		int val = numFloors;
 		for(Rider currentRider : passengers){
 			if(direction == Direction.UP && currentRider.getDestinationFloor() < val){
+				assert currentRider.getDestinationFloor() < currentFloor;
 				val = currentRider.getDestinationFloor();
 			}
 			else if(direction == Direction.DOWN){
 				if(val == numFloors){
 					val = 0;
 				}
-				
 				if(currentRider.getDestinationFloor() > val){
 					val = currentRider.getDestinationFloor();
 				}
 			}	
 		}
-		destinationFloor = val;
-		//TODO: go to this Floor
-		
+		return val;
 	}
 
 	/**
 	 * TODO: Check race conditions (doors can't open in transit, rider can't
 	 * leave during transit
 	 */
-	@Override
-	public void VisitFloor(int floor) {
-		//set currentFloor to the correctValue
+	
+	public void arriveAtFloor(int floor) {
 		atFloor = true;
 		currentFloor = floor;
-		//wake everyone up on the elevator
 		for(EventBarrier x : controller.getBuilding().getOnBarriers()){
 			if(floor == x.getFloor()){
+				//x is the eventBarrier for the 'ith' floor -- we are now at that floor so wake up all those riders
 				x.raise();
 				subtractRiders();
+				updateExitingRiders(x);
 			}
-		}
-				
-		//raise the event so riders know to wake up
-		if(direction == Direction.UP){
-			for(EventBarrier curBarrier : controller.getBuilding().getUpBarriers()){
-				if(curBarrier.getFloor() == floor){
-					//tell that floor to wake up and get on the elevator
-					curBarrier.raise();
-					//TODO: add riders to list for the elevator to know who to add.
-					
-					
-				}
-			}
-		}
-		if(direction == Direction.DOWN){
-			for(EventBarrier curBarrier : controller.getBuilding().getDownBarriers()){
-				if(curBarrier.getFloor() == floor){
-					//tell that floor to wake up and get on the elevator
-					curBarrier.raise();
-					
-				}
-			}
-		}
-			
+		}	
+		
+		OpenDoors();
+		//TODO:Thread should block here until complete -- maybe it is already doing this??
 		
 		ClosedDoors();
+	}
+
+	private void updateExitingRiders(EventBarrier currentBarrier) {
+		for(Rider x : passengers){
+			if(x.getDestinationFloor() == currentFloor){
+				x.setCurrentFloor(currentFloor);
+				x.setOnElevator(false);
+				x.setMyBarrier(currentBarrier);
+			}
+		}
 	}
 
 	@Override
@@ -141,7 +146,6 @@ public class Elevator extends AbstractElevator{
 		for(Rider x : passengers){
 			if(x.getDestinationFloor() == currentFloor){
 				numOfRiders--;
-				x.setCurrentFloor(currentFloor);
 				controller.getBuilding().getOnBarriers().remove(x);
 				/*now this 'rider' is off the elevator but just staying on the floor -- it will need to 'callUp' 
 				 * or 'callDown' in order to get back on.

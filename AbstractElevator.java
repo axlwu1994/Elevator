@@ -30,7 +30,7 @@ public abstract class AbstractElevator {
 	public abstract void ClosedDoors();
 
 	/* Go to a requested floor */
-	public abstract void VisitFloor(int floor);
+	public abstract void arriveAtFloor(int floor);
 
 
 	/**

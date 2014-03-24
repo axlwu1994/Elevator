@@ -31,19 +31,19 @@ public class Building extends AbstractBuilding{
 	}
 
 	@Override
-	public AbstractElevator CallUp(EventBarrier eb) {
+	public Elevator CallUp(EventBarrier eb) {
 		// TODO Auto-generated method stub
 		addUpBarrier(eb);
-		myElevatorController.checkUpElevators(eb.getFloor());
-		return null;
+		Elevator reRoutedElevator = myElevatorController.checkUpElevators(eb.getFloor());
+		return reRoutedElevator;
 	}
 
 	@Override
-	public AbstractElevator CallDown(int fromFloor) {
+	public Elevator CallDown(int fromFloor) {
 		// TODO Auto-generated method stub
 		addDownBarrier(fromFloor);
-		myElevatorController.checkDownElevators(fromFloor);
-		return null;
+		Elevator reRoutedElevator = myElevatorController.checkDownElevators(fromFloor);
+		return reRoutedElevator;
 	}
 
 	/**
@@ -125,7 +125,7 @@ public class Building extends AbstractBuilding{
 				myElevatorController.checkDownElevators(rerouteFloor);
 			}
 			
-			elevator.VisitFloor(elevator.getDestinationFloor());
+			elevator.arriveAtFloor(elevator.getDestinationFloor());
 			i++;
 		}
 	}

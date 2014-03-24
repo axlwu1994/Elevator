@@ -30,30 +30,37 @@ public class ElevatorController {
 	 * elevator should reroute to stop at floor 4 instead of 8.
 	 * @param rerouteFloor
 	 */
-	protected synchronized void checkUpElevators(int rerouteFloor) {
+	protected synchronized Elevator checkUpElevators(int rerouteFloor) {
+		Elevator finalElevator = null;
 		if(!checkUp){
 			for(Elevator curElevator : allElevators){
 				if(curElevator.getDirectionStatus() != Direction.DOWN && curElevator.getCurrentFloor() <= rerouteFloor){
 					//the elevator is going up so reroute to new floor
 					curElevator.setDestinationFloorAndChangeDirection(rerouteFloor);
-					//TODO: Ryan Thought: return the elevator id all the way back to the rider.
 					checkUp = true;
+					finalElevator = curElevator;
 				}
+				
 			}
 		}
+		return finalElevator;
+		
 	}
 	
 	
-	protected synchronized void checkDownElevators(int rerouteFloor) {
+	protected synchronized Elevator checkDownElevators(int rerouteFloor) {
+		Elevator finalElevator = null;
 		if(!checkDown){
 			for(Elevator curElevator : allElevators){
 				if(curElevator.getDirectionStatus() != Direction.UP && curElevator.getCurrentFloor() >= rerouteFloor){
 					//the elevator is going up so reroute to new floor
 					curElevator.setDestinationFloorAndChangeDirection(rerouteFloor);
 					checkDown = true;
+					finalElevator = curElevator;
 				}
 			}
 		}
+		return finalElevator;
 	}
 	
 	protected synchronized void checkOnElevators(int rerouteFloor) {

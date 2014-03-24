@@ -1,5 +1,6 @@
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 
@@ -22,9 +23,9 @@ public class Building extends AbstractBuilding{
 	public Building(int numFloors, int numElevators) {
 		super(numFloors, numElevators);
 		
-		upBarriers = new HashSet<EventBarrier>();
-		downBarriers = new HashSet<EventBarrier>();
-		onBarriers = new HashSet<EventBarrier>();
+		upBarriers = Collections.newSetFromMap(new ConcurrentHashMap<EventBarrier, Boolean>());
+		downBarriers = Collections.newSetFromMap(new ConcurrentHashMap<EventBarrier, Boolean>());
+		onBarriers = Collections.newSetFromMap(new ConcurrentHashMap<EventBarrier, Boolean>());
 		
 		// TODO Auto-generated constructor stub
 	}

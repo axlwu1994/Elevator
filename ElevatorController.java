@@ -1,4 +1,7 @@
-import java.util.HashSet;
+import java.util.Collections;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
 
 /**
  * 
@@ -9,7 +12,7 @@ import java.util.HashSet;
  */
 
 public class ElevatorController {
-	private HashSet<Elevator> allElevators;
+	private Set<Elevator> allElevators;
 	private boolean checkUp;
 	private boolean checkDown;
 	
@@ -17,7 +20,7 @@ public class ElevatorController {
 	
 	public ElevatorController(Building building, Elevator e){
 		//TODO: add multiple elevators
-		allElevators = new HashSet<Elevator>();
+		allElevators = Collections.newSetFromMap(new ConcurrentHashMap<Elevator, Boolean>());
 		allElevators.add(e);
 		onlyBuilding = building;
 		checkUp = false;
@@ -64,7 +67,7 @@ public class ElevatorController {
 		return onlyBuilding;
 	}
 	
-	protected HashSet<Elevator> getElevators(){
+	protected Set<Elevator> getElevators(){
 		return allElevators;
 	}
 	

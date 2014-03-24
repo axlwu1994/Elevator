@@ -1,8 +1,6 @@
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 
@@ -35,8 +33,8 @@ public class Elevator extends AbstractElevator{
 	public Elevator(int numFloors, int elevatorId, int maxOccupancyThreshold) {
 		super(numFloors, elevatorId, maxOccupancyThreshold);
 		numOfRiders = 0;
-		passengers = new ArrayList<Rider>();
-		peopleBoarding = new ArrayList<Rider>();
+		passengers = new CopyOnWriteArrayList<Rider>();
+		peopleBoarding = new CopyOnWriteArrayList<Rider>();
 		currentFloor = 0;
 		destinationFloor = 0;
 		doorsOpen = false;
@@ -204,6 +202,7 @@ public class Elevator extends AbstractElevator{
 	}
 
 	public void addPassenger(Rider x) {
+		numOfRiders++;
 		passengers.add(x);	
 	}
 

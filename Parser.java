@@ -1,7 +1,8 @@
+
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Parser {
 	
@@ -10,7 +11,7 @@ public class Parser {
 	
 	
 	public void readFile(File input) {
-		List<Rider> riderList = new ArrayList<Rider>();
+		List<Rider> riderList = new CopyOnWriteArrayList<Rider>();
 		
 		Scanner in = new Scanner(System.in);
 		int i = in.nextInt();

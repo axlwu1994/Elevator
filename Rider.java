@@ -37,7 +37,7 @@ public class Rider extends Thread{
 	 * it up, once it arrives on its floor.
 	 */
 	public void buttonUp(){
-		myBuilding.CallUp(myBarrier); 
+		myBuilding.CallUp(myBarrier);
 		//TODO: Ryan Thought: here we should know which elevator is coming so we can get rid of for-loop
 		myBarrier.arrive();
 		
@@ -51,7 +51,6 @@ public class Rider extends Thread{
 				myBuilding.removeUpBarrier(currentFloor);
 				myBuilding.addOnBarriers(onBarrier);	
 
-				
 				elevator.addPassenger(this);
 				onElevator = true;
 				myBarrier.complete();

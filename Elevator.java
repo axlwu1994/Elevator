@@ -174,10 +174,10 @@ public class Elevator extends AbstractElevator{
 	public void calculateDirection(Set<EventBarrier> upBarriers, Set<EventBarrier> downBarriers, List<Rider> riders){
 		if(!riders.isEmpty()) {
 			for(Rider r : riders){
-				if(r.getDirection()) {
+				if(r.getIsGoingUp()) {
 					direction = Direction.UP;
 				}
-				else if(!r.getDirection()) {
+				else if(!r.getIsGoingUp()) {
 					direction = Direction.DOWN;
 				}
 				 break;

@@ -14,14 +14,10 @@ public class Rider extends Thread{
 
 	private int currentFloor;
 	private int destFloor;
-	//TODO: distance from destination floor -- to know which way the rider is going
 	private boolean onElevator;
 	private boolean goingUp;
-
-	
 	private EventBarrier myBarrier;
 	private Building myBuilding;
-	
 	
 	public Rider(Building building, int presentFloor, int destination, EventBarrier eventBarrier){
 		this.myBuilding = building;
@@ -38,10 +34,8 @@ public class Rider extends Thread{
 	 */
 	public void buttonUp(){
 		myBuilding.CallUp(myBarrier);
-		//TODO: Ryan Thought: here we should know which elevator is coming so we can get rid of for-loop
 		myBarrier.arrive();
-		
-		//TODO: Ryan Thought: use the id above to see if the passenger can fit into the elevator.
+
 		
 		for(Elevator elevator : myBuilding.getElevatorController().getElevators()){
 			if(currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() > elevator.getNumPassengers() && elevator.getDirectionStatus() != Direction.DOWN){
@@ -160,7 +154,7 @@ public class Rider extends Thread{
 		return this.myBarrier;
 	}
 
-	public boolean getDirection() {
+	public boolean getIsGoingUp() {
 		return goingUp;
 	}
 

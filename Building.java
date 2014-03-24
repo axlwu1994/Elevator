@@ -26,15 +26,15 @@ public class Building extends AbstractBuilding{
 		upBarriers = Collections.newSetFromMap(new ConcurrentHashMap<EventBarrier, Boolean>());
 		downBarriers = Collections.newSetFromMap(new ConcurrentHashMap<EventBarrier, Boolean>());
 		onBarriers = Collections.newSetFromMap(new ConcurrentHashMap<EventBarrier, Boolean>());
-
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public AbstractElevator CallUp(EventBarrier eb) {
 		// TODO Auto-generated method stub
+		
+		//TODO: Ryan Thought: have this return elevator from checkUpElevators()
 		addUpBarrier(eb);
-		myElevatorController.checkUpElevators(eb.getFloor());
+		myElevatorController.findClosestUpElevator(eb.getFloor());
 		return null;
 	}
 
@@ -42,7 +42,7 @@ public class Building extends AbstractBuilding{
 	public AbstractElevator CallDown(EventBarrier eb) {
 		// TODO Auto-generated method stub
 		addDownBarrier(eb);
-		myElevatorController.checkDownElevators(eb.getFloor());
+		myElevatorController.findClosestDownElevator(eb.getFloor());
 		return null;
 	}
 
@@ -100,7 +100,9 @@ public class Building extends AbstractBuilding{
 	public synchronized void runElevatorLoop () {
 		int i = 0;
 		while (i < 1000) {
+			//TODO: Ryan Thought: Should this be 1000 or should we change to something generic 
 			Elevator elevator = myElevatorController.chooseElevator();
+			//TODO: Thought: Is chooseElevator just picking a non-null elevator --we should put more logic in there
 			elevator.calculateDirection(upBarriers, downBarriers, elevator.getPassengers());
 			if(elevator.getDirectionStatus() != Direction.DOWN) {
 				int rerouteFloor = numFloors;
@@ -112,7 +114,7 @@ public class Building extends AbstractBuilding{
 						}
 					}
 				}
-				myElevatorController.checkUpElevators(rerouteFloor);
+				myElevatorController.findClosestUpElevator(rerouteFloor);
 			}
 
 			else if(elevator.getDirectionStatus() != Direction.UP) {
@@ -125,7 +127,7 @@ public class Building extends AbstractBuilding{
 						}
 					}
 				}
-				myElevatorController.checkDownElevators(rerouteFloor);
+				myElevatorController.findClosestDownElevator(rerouteFloor);
 			}
 			if(elevator.getDirectionStatus() != Direction.STAGNANT) {
 				elevator.VisitFloor(elevator.getDestinationFloor());

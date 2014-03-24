@@ -33,7 +33,7 @@ public class ElevatorController {
 	 * elevator should reroute to stop at floor 4 instead of 8.
 	 * @param rerouteFloor
 	 */
-	protected synchronized void checkUpElevators(int rerouteFloor) {
+	protected synchronized void findClosestUpElevator(int rerouteFloor) {
 		if(!checkUp){
 			for(Elevator curElevator : allElevators){
 				if(curElevator.getDirectionStatus() != Direction.DOWN && curElevator.getCurrentFloor() <= rerouteFloor){
@@ -47,7 +47,7 @@ public class ElevatorController {
 	}
 	
 	
-	protected synchronized void checkDownElevators(int rerouteFloor) {
+	protected synchronized void findClosestDownElevator(int rerouteFloor) {
 		if(!checkDown){
 			for(Elevator curElevator : allElevators){
 				if(curElevator.getDirectionStatus() != Direction.UP && curElevator.getCurrentFloor() >= rerouteFloor){

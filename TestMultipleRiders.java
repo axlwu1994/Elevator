@@ -46,7 +46,7 @@ public class TestMultipleRiders {
 		e.setController(ec);
 		
 		EventBarrier upBar1 = new EventBarrier();
-		upBar1.setFloor(2);
+		upBar1.setFloor(0);
 		
 		EventBarrier upBar2 = new EventBarrier();
 		upBar2.setFloor(1);
@@ -63,7 +63,7 @@ public class TestMultipleRiders {
 		EventBarrier upBar6 = new EventBarrier();
 		upBar6.setFloor(6);
 		
-		Rider r1 = new Rider(building, 2, 18, upBar1);
+		Rider r1 = new Rider(building, 0, 18, upBar1);
 		Rider r2 = new Rider(building, 1, 17, upBar2);
 		Rider r3 = new Rider(building, 3, 16, upBar3);
 		Rider r4 = new Rider(building, 4, 15, upBar4);

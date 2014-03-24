@@ -35,7 +35,7 @@ public class Elevator extends AbstractElevator{
 		numOfRiders = 0;
 		passengers = new CopyOnWriteArrayList<Rider>();
 		peopleBoarding = new CopyOnWriteArrayList<Rider>();
-		currentFloor = 0;
+		currentFloor = -1;
 		destinationFloor = 0;
 		doorsOpen = false;
 		atFloor = false;

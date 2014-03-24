@@ -23,7 +23,7 @@ public class TesElevator {
 		eb1.setFloor(1);
 		r1.updateEventBarrier(eb1);
 		r1.start();
-		r1.run();
+		//r1.run();
 		assertEquals(2, r1.getDestinationFloor());
 		building.runElevatorLoop();
 		

@@ -158,8 +158,20 @@ public class Elevator extends AbstractElevator{
 		return currentFloor;
 	}
 
-	public void setDestinationFloor(int floor){
+	public void setDestinationFloorAndChangeDirection(int floor){
+		int oldFloor = destinationFloor;
 		destinationFloor = floor;
+		
+		if (destinationFloor > oldFloor) {
+			direction = Direction.UP;
+		}
+		else if (destinationFloor < oldFloor) {
+			direction = Direction.DOWN;
+		}
+		else {
+			direction = Direction.STAGNANT;
+		}
+		
 	}
 	
 	//TODO: change elevator direction
@@ -172,6 +184,12 @@ public class Elevator extends AbstractElevator{
 		}
 		else if(direction == Direction.DOWN && downBarriers.isEmpty()){
 			direction = Direction.UP;
+		}
+		else if (direction == Direction.STAGNANT && !upBarriers.isEmpty()) {
+			direction = Direction.UP;
+		}
+		else if (direction == Direction.STAGNANT && !downBarriers.isEmpty()) {
+			direction = Direction.DOWN;
 		}
 		
 	}

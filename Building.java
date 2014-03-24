@@ -103,21 +103,23 @@ public class Building extends AbstractBuilding{
 			if(onBarriers.isEmpty()) {
 				elevator.calculateDirection(upBarriers, downBarriers);
 			}
-			if(elevator.getDirectionStatus() != Direction.DOWN) {
+			else if(elevator.getDirectionStatus() != Direction.DOWN) {
 				int rerouteFloor = numFloors;
 				for(EventBarrier eb : upBarriers){
 					if(eb.getFloor() < rerouteFloor && eb.getFloor() > elevator.getCurrentFloor()){
 						rerouteFloor = eb.getFloor();
+						elevator.setDestinationFloorAndChangeDirection(rerouteFloor);
 					}
 				}
 				myElevatorController.checkUpElevators(rerouteFloor);
 			}
 			
-			if(elevator.getDirectionStatus() != Direction.UP) {
+			else if(elevator.getDirectionStatus() != Direction.UP) {
 				int rerouteFloor =0;
 				for(EventBarrier eb : downBarriers){
 					if(eb.getFloor() > rerouteFloor && eb.getFloor() < elevator.getCurrentFloor()){
 						rerouteFloor = eb.getFloor();
+						elevator.setDestinationFloorAndChangeDirection(rerouteFloor);
 					}
 				}
 				myElevatorController.checkDownElevators(rerouteFloor);

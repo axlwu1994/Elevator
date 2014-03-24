@@ -22,17 +22,17 @@ public class Parser {
 		int numElevators = Integer.parseInt(aboutBuilding[1]);
 		
 		//This gets all the riders
-		while (in.hasNext()) {
-			String line = in.nextLine();
-			String[] floors = line.split(" ");
-			int start = Integer.parseInt(floors[0]);
-			int destination = Integer.parseInt(floors[1]);
-			
-			Building building = new Building(1, 1);
-			
-			Rider rider = new Rider(building, start, destination);
-			riderList.add(rider);
-		}
+//		while (in.hasNext()) {
+//			String line = in.nextLine();
+//			String[] floors = line.split(" ");
+//			int start = Integer.parseInt(floors[0]);
+//			int destination = Integer.parseInt(floors[1]);
+//			
+//			Building building = new Building(1, 1);
+//			
+//			Rider rider = new Rider(building, start, destination);
+//			riderList.add(rider);
+//		}
 		
 	}
 }

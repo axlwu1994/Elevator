@@ -35,7 +35,7 @@ public class ElevatorController {
 			for(Elevator curElevator : allElevators){
 				if(curElevator.getDirectionStatus() != Direction.DOWN && curElevator.getCurrentFloor() <= rerouteFloor){
 					//the elevator is going up so reroute to new floor
-					curElevator.setDestinationFloor(rerouteFloor);
+					curElevator.setDestinationFloorAndChangeDirection(rerouteFloor);
 					//TODO: Ryan Thought: return the elevator id all the way back to the rider.
 					checkUp = true;
 				}
@@ -49,7 +49,7 @@ public class ElevatorController {
 			for(Elevator curElevator : allElevators){
 				if(curElevator.getDirectionStatus() != Direction.UP && curElevator.getCurrentFloor() >= rerouteFloor){
 					//the elevator is going up so reroute to new floor
-					curElevator.setDestinationFloor(rerouteFloor);
+					curElevator.setDestinationFloorAndChangeDirection(rerouteFloor);
 					checkDown = true;
 				}
 			}

@@ -23,9 +23,9 @@ public class Rider extends Thread{
 	private Building myBuilding;
 	
 	
-	public Rider(Building building, int presentFloor, int destination){
+	public Rider(Building building, int presentFloor, int destination, EventBarrier eventBarrier){
 		this.myBuilding = building;
-		this.myBarrier = new EventBarrier();
+		this.myBarrier = eventBarrier;
 		currentFloor = presentFloor;
 		destFloor = destination;
 		setDirection();

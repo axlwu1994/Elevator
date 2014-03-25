@@ -48,6 +48,20 @@ public class Elevator extends AbstractElevator implements Runnable {
 		rangeBottomFloor = 0;
 		rangeTopFloor = numFloors;
 	}
+	
+	public Elevator(int numFloors, int elevatorId, int maxOccupancyThreshold,int bottomFloor,int topFloor) {
+		super(numFloors, elevatorId, maxOccupancyThreshold);
+		numOfRiders = 0;
+		passengers = new CopyOnWriteArrayList<Rider>();
+		peopleBoarding = new CopyOnWriteArrayList<Rider>();
+		currentFloor = -1;
+		destinationFloor = 0;
+		doorsOpen = false;
+		atFloor = false;
+		direction = Direction.STAGNANT;
+		rangeBottomFloor = bottomFloor;
+		rangeTopFloor = topFloor;
+	}
 
 	@Override
 	public void OpenDoors() {

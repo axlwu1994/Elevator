@@ -35,6 +35,8 @@ public class Parser {
 		myElevatorCapacity = Integer.parseInt(aboutBuilding[3]);
 
 		Building building = new Building(myNumFloors, myNumElevators);
+		ElevatorController elevatorController = new ElevatorController(building);
+		building.setElevatorController(elevatorController);
 		// This gets all the riders
 		while (in.hasNext()) {
 			String line = in.nextLine();
@@ -63,7 +65,6 @@ public class Parser {
 		int elevatorCounter = 0;
 		int floorCounter = 0;
 		int floorRanges = (int) Math.floor(myNumFloors / myNumElevators);
-		ElevatorController elevatorController = new ElevatorController(building);
 		while (floorCounter <= myNumFloors) {
 			if (floorCounter+floorRanges <= myNumFloors) {
 				Elevator e = new Elevator(myNumFloors, elevatorCounter,

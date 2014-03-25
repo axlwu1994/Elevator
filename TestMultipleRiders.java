@@ -77,7 +77,7 @@ public class TestMultipleRiders {
 		upBar7.setFloor(15);
 		
 		EventBarrier upBar8 = new EventBarrier();
-		upBar8.setFloor(6);
+		upBar8.setFloor(5);
 
 		EventBarrier upBar9 = new EventBarrier();
 		upBar9.setFloor(15);
@@ -90,7 +90,7 @@ public class TestMultipleRiders {
 		Rider r6 = new Rider(building, 5, 13, upBar6);
 		Rider r7 = new Rider(building, 15, 5, upBar7);
 		
-		Rider r8 = new Rider(building, 6, upBar8, BadlyBehaved.NO_FLOOR_REQUEST);
+		Rider r8 = new Rider(building, 5, upBar8, BadlyBehaved.NO_FLOOR_REQUEST);
 		Rider r9 = new Rider(building, 15, upBar9, BadlyBehaved.PRESS_BUTTON_DONT_GET_ON);
 		
 		r1.start();

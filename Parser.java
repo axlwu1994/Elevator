@@ -11,11 +11,10 @@ public class Parser {
 	int myNumRiders;
 	int myElevatorCapacity;
 
-	List<Rider> myRiderList;
-	List<Elevator> myElevatorList;
+	List<Rider> myRiderList = new CopyOnWriteArrayList<Rider>();
+	List<Elevator> myElevatorList = new CopyOnWriteArrayList<Elevator>();
 
 	public void readFile(String fileName) {
-		List<Rider> riderList = new CopyOnWriteArrayList<Rider>();
 
 		Scanner in = null;
 
@@ -25,8 +24,6 @@ public class Parser {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		int i = in.nextInt();
 
 		// This gets the building numfloors and numelevators
 		String firstLine = in.nextLine();
@@ -51,23 +48,29 @@ public class Parser {
 
 			Rider rider = new Rider(building, sourceFloor, destinationFloor,
 					barrier);
-			riderList.add(rider);
+			myRiderList.add(rider);
 		}
 
 		int elevatorCounter = 0;
 		int floorCounter = 0;
 		int floorRanges = (int) Math.floor(myNumFloors / myNumElevators);
-
 		while (floorCounter <= myNumFloors) {
-			myElevatorList.add(new Elevator(myNumFloors, elevatorCounter,
-					myElevatorCapacity, floorCounter, floorCounter
-							+ floorRanges));
+			if (floorCounter+floorRanges <= myNumFloors) {
+				Elevator e = new Elevator(myNumFloors, elevatorCounter,
+						myElevatorCapacity, floorCounter, floorCounter
+								+ floorRanges);
+				myElevatorList.add(e);
+			}
+			else {
+				Elevator e = new Elevator(myNumFloors, elevatorCounter,
+						myElevatorCapacity, floorCounter, myNumFloors);
+				myElevatorList.add(e);
+			}
 			elevatorCounter++;
 			floorCounter = floorCounter + floorRanges + 1;
 		}
-
 	}
-
+	
 	public int getMyNumFloors() {
 		return myNumFloors;
 	}
@@ -92,21 +95,21 @@ public class Parser {
 		return myElevatorList;
 	}
 
-	public static void main(String[] args) {
-		Parser parser = new Parser();
-		parser.readFile("basicElevator.txt");
-		System.out.println("BREAK1");
-		System.out.println(parser.getMyNumFloors());
-		System.out.println(parser.getMyNumElevators());
-		System.out.println(parser.getMyNumRiders());
-		System.out.println(parser.getMyElevatorCapacity());
-		for (Elevator e : parser.getMyElevatorList()) {
-			System.out.println(e.getDestinationFloor() + " " + e.getCurrentFloor());
-		}
-		System.out.println("BREAK2");
-		for (Rider r : parser.getMyRiderList()) {
-			System.out.println(r.getRiderId());
-		}
-
-	}
+//	public static void main(String[] args) {
+//		Parser parser = new Parser();
+//		parser.readFile("basicElevator.txt");
+//		System.out.println("BREAK1");
+//		System.out.println(parser.getMyNumFloors());
+//		System.out.println(parser.getMyNumElevators());
+//		System.out.println(parser.getMyNumRiders());
+//		System.out.println(parser.getMyElevatorCapacity());
+//		for (Elevator e : parser.getMyElevatorList()) {
+//			System.out.println(e.getDestinationFloor() + " " + e.getCurrentFloor());
+//		}
+//		System.out.println("BREAK2");
+//		for (Rider r : parser.getMyRiderList()) {
+//			System.out.println(r);
+//		}
+//
+//	}
 }

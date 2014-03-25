@@ -1,0 +1,4 @@
+
+public enum BadlyBehaved {
+	PRESS_BUTTON_DONT_GET_ON, NO_FLOOR_REQUEST, WELL_BEHAVED;
+}

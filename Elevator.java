@@ -8,6 +8,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * 
  * @author rtoussaint
  * @author Lyndsay Kerwin
+ * @author Ryan Fishel
+ * @author Carlos Reyes
  *
  */
 
@@ -215,10 +217,10 @@ public class Elevator extends AbstractElevator implements Runnable {
 		else if(direction == Direction.DOWN && (downBarriers.isEmpty() || belowBottomOfDownBarriers(downBarriers))){
 			direction = Direction.UP;
 		}
-		else if (direction == Direction.STAGNANT && !upBarriers.isEmpty()) {
+		else if (direction == Direction.STAGNANT && (belowBottomOfDownBarriers(upBarriers) || belowBottomOfDownBarriers(downBarriers))) {
 			direction = Direction.UP;
 		}
-		else if (direction == Direction.STAGNANT && !downBarriers.isEmpty()) {
+		else if (direction == Direction.STAGNANT && (aboveTopOfUpBarriers(upBarriers) || aboveTopOfUpBarriers(downBarriers))) {
 			direction = Direction.DOWN;
 		}
 		

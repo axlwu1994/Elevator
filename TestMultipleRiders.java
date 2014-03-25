@@ -8,9 +8,9 @@ import org.junit.Test;
 
 public class TestMultipleRiders {
 	
-	private Building building = new Building(18, 1);
-	private Elevator e = new Elevator(18, 1, 5);
-	private Elevator e2 = new Elevator(18, 2, 5);
+	private Building building = new Building(20, 2);
+	private Elevator e = new Elevator(20, 1, 5);
+	private Elevator e2 = new Elevator(20, 2, 5);
 	private ElevatorController ec = new ElevatorController(building, e);
 	
 	
@@ -56,13 +56,13 @@ public class TestMultipleRiders {
 		
 		
 		EventBarrier upBar1 = new EventBarrier();
-		upBar1.setFloor(12);
+		upBar1.setFloor(0);
 		
 		EventBarrier upBar2 = new EventBarrier();
-		upBar2.setFloor(11);
+		upBar2.setFloor(1);
 		
 		EventBarrier upBar3 = new EventBarrier();
-		upBar3.setFloor(13);
+		upBar3.setFloor(3);
 		
 		EventBarrier upBar4 = new EventBarrier();
 		upBar4.setFloor(4);

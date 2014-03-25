@@ -95,6 +95,18 @@ public class Parser {
 	public static void main(String[] args) {
 		Parser parser = new Parser();
 		parser.readFile("basicElevator.txt");
+		System.out.println("BREAK1");
+		System.out.println(parser.getMyNumFloors());
+		System.out.println(parser.getMyNumElevators());
+		System.out.println(parser.getMyNumRiders());
+		System.out.println(parser.getMyElevatorCapacity());
+		for (Elevator e : parser.getMyElevatorList()) {
+			System.out.println(e.getDestinationFloor() + " " + e.getCurrentFloor());
+		}
+		System.out.println("BREAK2");
+		for (Rider r : parser.getMyRiderList()) {
+			System.out.println(r.getRiderId());
+		}
 
 	}
 }

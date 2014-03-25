@@ -19,6 +19,22 @@ public class TestMultipleRiders {
 	public void test() {
 		Parser parser = new Parser();
 		parser.readFile("basicElevator.txt");
+		
+		
+		for (Rider rider : parser.getMyRiderList()) {
+			rider.start();
+		}
+		for (Elevator elevator : parser.getMyElevatorList()) {
+			Thread elevatorThread = new Thread(elevator);
+			elevatorThread.start();
+		}
+//		
+//		try {
+//			Thread.sleep(100);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+		
 	}
 	
 	@Test

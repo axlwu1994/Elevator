@@ -27,6 +27,14 @@ public class ElevatorController {
 		checkUp = false;
 		checkDown = false;
 	}
+	public ElevatorController(Building building){
+		//TODO: add multiple elevators
+		allElevators = Collections.newSetFromMap(new ConcurrentHashMap<Elevator, Boolean>());
+		onlyBuilding = building;
+		checkUp = false;
+		checkDown = false;
+	}
+	
 	
 	/**
 	 * If a rider presses the up button while an elevator is in pursuit, it may need to reroute and pick this rider

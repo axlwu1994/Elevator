@@ -6,13 +6,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Parser {
 
-	int myNumFloors;
-	int myNumElevators;
-	int myNumRiders;
-	int myElevatorCapacity;
+	private int myNumFloors;
+	private int myNumElevators;
+	private int myNumRiders;
+	private int myElevatorCapacity;
 
-	List<Rider> myRiderList = new CopyOnWriteArrayList<Rider>();
-	List<Elevator> myElevatorList = new CopyOnWriteArrayList<Elevator>();
+	private List<Rider> myRiderList = new CopyOnWriteArrayList<Rider>();
+	private List<Elevator> myElevatorList = new CopyOnWriteArrayList<Elevator>();
 
 	public void readFile(String fileName) {
 
@@ -34,6 +34,7 @@ public class Parser {
 		myNumRiders = Integer.parseInt(aboutBuilding[2]);
 		myElevatorCapacity = Integer.parseInt(aboutBuilding[3]);
 
+		Building building = new Building(myNumFloors, myNumElevators);
 		// This gets all the riders
 		while (in.hasNext()) {
 			String line = in.nextLine();
@@ -41,29 +42,42 @@ public class Parser {
 			int riderId = Integer.parseInt(floors[0]); // Not Used
 			int sourceFloor = Integer.parseInt(floors[1]);
 			int destinationFloor = Integer.parseInt(floors[2]);
-
-			Building building = new Building(myNumFloors, myNumElevators);
+			
 			EventBarrier barrier = new EventBarrier();
 			barrier.setFloor(sourceFloor);
+			Rider rider;
+			if (destinationFloor == -1) {
+				rider = new Rider(building, sourceFloor, barrier, BadlyBehaved.NO_FLOOR_REQUEST);
+			}
+			else if (destinationFloor == -2) {
+				rider = new Rider(building, sourceFloor, barrier, BadlyBehaved.PRESS_BUTTON_DONT_GET_ON);
+			}
+			else {
+				rider = new Rider(building, sourceFloor, destinationFloor,
+						barrier);
+			}
 
-			Rider rider = new Rider(building, sourceFloor, destinationFloor,
-					barrier);
 			myRiderList.add(rider);
 		}
 
 		int elevatorCounter = 0;
 		int floorCounter = 0;
 		int floorRanges = (int) Math.floor(myNumFloors / myNumElevators);
+		ElevatorController elevatorController = new ElevatorController(building);
 		while (floorCounter <= myNumFloors) {
 			if (floorCounter+floorRanges <= myNumFloors) {
 				Elevator e = new Elevator(myNumFloors, elevatorCounter,
 						myElevatorCapacity, floorCounter, floorCounter
 								+ floorRanges);
+				elevatorController.addElevator(e);
+				e.setController(elevatorController);
 				myElevatorList.add(e);
 			}
 			else {
 				Elevator e = new Elevator(myNumFloors, elevatorCounter,
 						myElevatorCapacity, floorCounter, myNumFloors);
+				elevatorController.addElevator(e);
+				e.setController(elevatorController);
 				myElevatorList.add(e);
 			}
 			elevatorCounter++;

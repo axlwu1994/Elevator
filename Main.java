@@ -14,7 +14,7 @@ import java.io.UnsupportedEncodingException;
 public class Main {
 	public static void main(String[] args) {
 		Parser parser = new Parser();
-		parser.readFile("elevatorTest3.txt");
+		parser.readFile(args[0]);
 		
 		for (Rider rider : parser.getMyRiderList()) {
 			rider.start();

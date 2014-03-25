@@ -49,14 +49,14 @@ public class Parser {
 			barrier.setFloor(sourceFloor);
 			Rider rider;
 			if (destinationFloor == -1) {
-				rider = new Rider(building, sourceFloor, barrier, BadlyBehaved.NO_FLOOR_REQUEST);
+				rider = new Rider(building, sourceFloor, barrier, BadlyBehaved.NO_FLOOR_REQUEST, riderId);
 			}
 			else if (destinationFloor == -2) {
-				rider = new Rider(building, sourceFloor, barrier, BadlyBehaved.PRESS_BUTTON_DONT_GET_ON);
+				rider = new Rider(building, sourceFloor, barrier, BadlyBehaved.PRESS_BUTTON_DONT_GET_ON, riderId);
 			}
 			else {
 				rider = new Rider(building, sourceFloor, destinationFloor,
-						barrier);
+						barrier, riderId);
 			}
 
 			myRiderList.add(rider);

@@ -67,13 +67,13 @@ public class TestMultipleRiders {
 		EventBarrier upBar6 = new EventBarrier();
 		upBar6.setFloor(6);
 
-		Rider r1 = new Rider(building, 12, 18, upBar1);
-		Rider r2 = new Rider(building, 11, 17, upBar2);
-		Rider r3 = new Rider(building, 13, 16, upBar3);
+		Rider r1 = new Rider(building, 12, 18, upBar1, 1);
+		Rider r2 = new Rider(building, 11, 17, upBar2, 2);
+		Rider r3 = new Rider(building, 13, 16, upBar3, 3);
 
-		Rider r4 = new Rider(building, 4, 7, upBar4);
-		Rider r5 = new Rider(building, 5, 2, upBar5);
-		Rider r6 = new Rider(building, 6, 9, upBar6);
+		Rider r4 = new Rider(building, 4, 7, upBar4, 4);
+		Rider r5 = new Rider(building, 5, 2, upBar5, 5);
+		Rider r6 = new Rider(building, 6, 9, upBar6, 6);
 
 		r1.start();
 		r2.start();
@@ -131,9 +131,73 @@ public class TestMultipleRiders {
 		assertEquals(parser.getMyRiderList().get(4).getCurrentFloor(), 23);
 		assertEquals(parser.getMyRiderList().get(5).getCurrentFloor(), 8);
 		assertEquals(parser.getMyRiderList().get(6).getCurrentFloor(), 17);
-		assertEquals(parser.getMyRiderList().get(7).getCurrentFloor(), 24);		assertEquals(parser.getMyRiderList().get(0).getCurrentFloor(), 10);
+		assertEquals(parser.getMyRiderList().get(7).getCurrentFloor(), 24);
 		assertEquals(parser.getMyRiderList().get(8).getCurrentFloor(), 1);
 		
+	}
+	
+	@Test
+	public void test4 () {
+		Parser parser = new Parser();
+		parser.readFile("elevatorTest2.txt");
+		
+		for (Rider rider : parser.getMyRiderList()) {
+			rider.start();
+		}
+		for (Elevator elevator : parser.getMyElevatorList()) {
+			Thread elevatorThread = new Thread(elevator);
+			elevatorThread.start();
+		}
+		
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		assertEquals(parser.getMyRiderList().get(0).getCurrentFloor(), 8);
+		assertEquals(parser.getMyRiderList().get(1).getCurrentFloor(), 3);
+		assertEquals(parser.getMyRiderList().get(2).getCurrentFloor(), 3);
+		assertEquals(parser.getMyRiderList().get(3).getCurrentFloor(), 2);
+		assertEquals(parser.getMyRiderList().get(4).getCurrentFloor(), 0);
+		assertEquals(parser.getMyRiderList().get(5).getCurrentFloor(), 1);
+		assertEquals(parser.getMyRiderList().get(6).getCurrentFloor(), 5);
+		assertEquals(parser.getMyRiderList().get(7).getCurrentFloor(), 0);
+	}
+	
+	@Test
+	public void test5() {
+		Parser parser = new Parser();
+		parser.readFile("elevatorTest3.txt");
+		
+		for (Rider rider : parser.getMyRiderList()) {
+			rider.start();
+		}
+		for (Elevator elevator : parser.getMyElevatorList()) {
+			Thread elevatorThread = new Thread(elevator);
+			elevatorThread.start();
+		}
+		
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
+		assertEquals(parser.getMyRiderList().get(0).getCurrentFloor(), 24);
+		assertEquals(parser.getMyRiderList().get(1).getCurrentFloor(), 68);
+		assertEquals(parser.getMyRiderList().get(2).getCurrentFloor(), 72);
+		assertEquals(parser.getMyRiderList().get(3).getCurrentFloor(), 79);
+		assertEquals(parser.getMyRiderList().get(4).getCurrentFloor(), 63);
+		assertEquals(parser.getMyRiderList().get(5).getCurrentFloor(), 58);
+		assertEquals(parser.getMyRiderList().get(6).getCurrentFloor(), 64);
+		assertEquals(parser.getMyRiderList().get(7).getCurrentFloor(), 41);
+		assertEquals(parser.getMyRiderList().get(8).getCurrentFloor(), 4);
+		assertEquals(parser.getMyRiderList().get(9).getCurrentFloor(), 12);
+		assertEquals(parser.getMyRiderList().get(10).getCurrentFloor(), 8);
+		assertEquals(parser.getMyRiderList().get(11).getCurrentFloor(), 11);
+		assertEquals(parser.getMyRiderList().get(12).getCurrentFloor(), 3);
+		assertEquals(parser.getMyRiderList().get(13).getCurrentFloor(), 30);
 	}
 	
 }

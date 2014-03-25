@@ -19,18 +19,20 @@ public class Rider extends Thread{
 	private EventBarrier myBarrier;
 	private Building myBuilding;
 	private BadlyBehaved carlos;
+	private int myID;
 
-	public Rider(Building building, int presentFloor, int destination, EventBarrier eventBarrier){
+	public Rider(Building building, int presentFloor, int destination, EventBarrier eventBarrier, int id){
 		this.myBuilding = building;
 		this.myBarrier = eventBarrier;
 		currentFloor = presentFloor;
 		destFloor = destination;
 		setDirection();
 		carlos = BadlyBehaved.WELL_BEHAVED;
+		this.myID = id;
 
 	}
 
-	public Rider(Building building, int presentFloor, EventBarrier eventBarrier, BadlyBehaved dumbRider) {
+	public Rider(Building building, int presentFloor, EventBarrier eventBarrier, BadlyBehaved dumbRider, int id) {
 		this.myBuilding = building;
 		this.myBarrier = eventBarrier;
 		currentFloor = presentFloor;
@@ -42,6 +44,7 @@ public class Rider extends Thread{
 		}
 		setDirection();
 		carlos = dumbRider;
+		this.myID = id;
 	}
 
 	/**
@@ -192,6 +195,14 @@ public class Rider extends Thread{
 
 	public boolean getIsGoingUp() {
 		return goingUp;
+	}
+
+	public int getMyID() {
+		return myID;
+	}
+
+	public void setMyID(int myID) {
+		this.myID = myID;
 	}
 
 

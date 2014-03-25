@@ -8,6 +8,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * 
  * @author rtoussaint
  * @author Lyndsay Kerwin
+ * @author Ryan Fishel
+ * @author Carlos Reyes
  *
  */
 

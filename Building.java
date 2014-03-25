@@ -6,6 +6,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * 
  * @author rtoussaint
  * @author Lyndsay Kerwin
+ * @author Ryan Fishel
+ * @author Carlos Reyes
  * 
  *
  *There is only one building for program.  It knows which floors have their 'up' and 'down' buttons pushed.  If a 

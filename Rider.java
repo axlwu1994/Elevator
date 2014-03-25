@@ -18,7 +18,7 @@ public class Rider extends Thread{
 	private boolean goingUp;
 	private EventBarrier myBarrier;
 	private Building myBuilding;
-	BadlyBehaved carlos;
+	private BadlyBehaved carlos;
 
 	public Rider(Building building, int presentFloor, int destination, EventBarrier eventBarrier){
 		this.myBuilding = building;
@@ -75,7 +75,7 @@ public class Rider extends Thread{
 					updateEventBarrier(onBarrier);
 
 				}
-				else if (currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() < elevator.getNumPassengers()  && elevator.getDirectionStatus() != Direction.DOWN){
+				else if (currentFloor == elevator.getCurrentFloor() && elevator.getMaxOccupancy() <= elevator.getNumPassengers()  && elevator.getDirectionStatus() != Direction.DOWN){
 					myBarrier.complete();
 					this.buttonUp();
 				}

@@ -1,48 +1,46 @@
-Opening elevator 0 doors at floor: 1
-Opening elevator 2 doors at floor: 22
-Opening elevator 1 doors at floor: 14
-Rider #: 5 going to floor 23 from floor 22 on elevator #: 2
-Rider #: 7 going to floor 17 from floor 14 on elevator #: 1
-Rider #: 1 going to floor 10 from floor 1 on elevator #: 0
-Closing doors 0
-Closing doors 2
+Opening elevator 1 doors at floor: 0
+Opening elevator 0 doors at floor: 0
+Rider #: 3 going to floor 3 from floor 0 on elevator #: 1
+Closing doors at elevator 1
+Opening elevator 1 doors at floor: 3
+Rider #: 3 is getting off elevator #: 1 at floor 3
+Closing doors at elevator 0
+Opening elevator 0 doors at floor: 3
+Rider #: 1 going to floor 8 from floor 3 on elevator #: 1
+Closing doors at elevator 1
+Opening elevator 1 doors at floor: 8
+Rider #: 1 is getting off elevator #: 1 at floor 8
+Closing doors at elevator 1
+Opening elevator 1 doors at floor: 7
+Closing doors at elevator 0
+Opening elevator 0 doors at floor: 12
+Closing doors at elevator 0
+Opening elevator 0 doors at floor: 4
+Rider #: 8 going to floor 0 from floor 7 on elevator #: 1
+Rider #: 4 going to floor 2 from floor 4 on elevator #: 0
+Closing doors at elevator 0
 Opening elevator 0 doors at floor: 2
-Opening elevator 2 doors at floor: 23
-Rider #: 4 going to floor 17 from floor 14 on elevator #: 1
-Rider #: 5 is getting off elevator #: 2 at floor 23
-Rider #: 2 going to floor 7 from floor 2 on elevator #: 0
-Closing doors 2
-Closing doors 0
-Closing doors 1
-Opening elevator 2 doors at floor: 21
-Opening elevator 0 doors at floor: 5
-Opening elevator 1 doors at floor: 17
-Rider #: 7 is getting off elevator #: 1 at floor 17
-Rider #: 6 going to floor 8 from floor 5 on elevator #: 0
-Rider #: 9 going to floor 1 from floor 21 on elevator #: 2
-Rider #: 4 is getting off elevator #: 1 at floor 17
-Closing doors 0
-Closing doors 2
-Opening elevator 0 doors at floor: 7
-Rider #: 8 going to floor 24 from floor 17 on elevator #: 1
-Rider #: 2 is getting off elevator #: 0 at floor 7
-Opening elevator 2 doors at floor: 1
-Rider #: 9 is getting off elevator #: 2 at floor 1
-Closing doors 0
-Closing doors 2
-Closing doors 1
-Opening elevator 0 doors at floor: 8
-Rider #: 6 is getting off elevator #: 0 at floor 8
-Closing doors 0
-Opening elevator 1 doors at floor: 24
-Rider #: 8 is getting off elevator #: 1 at floor 24
-Closing doors 1
-Opening elevator 0 doors at floor: 10
-Rider #: 1 is getting off elevator #: 0 at floor 10
-Closing doors 0
-Opening elevator 1 doors at floor: 14
-Rider #: 3 going to floor 2 from floor 14 on elevator #: 1
-Closing doors 1
-Opening elevator 1 doors at floor: 2
-Rider #: 3 is getting off elevator #: 1 at floor 2
-Closing doors 1
+Rider #: 4 is getting off elevator #: 0 at floor 2
+Closing doors at elevator 0
+Closing doors at elevator 1
+Opening elevator 1 doors at floor: 6
+Rider #: 5 going to floor 0 from floor 6 on elevator #: 1
+Closing doors at elevator 1
+Opening elevator 1 doors at floor: 5
+Closing doors at elevator 1
+Opening elevator 1 doors at floor: 0
+Rider #: 8 is getting off elevator #: 1 at floor 0
+Rider #: 5 is getting off elevator #: 1 at floor 0
+Closing doors at elevator 1
+Opening elevator 1 doors at floor: 12
+Closing doors at elevator 1
+Opening elevator 1 doors at floor: 8
+Rider #: 6 going to floor 1 from floor 8 on elevator #: 1
+Rider #: 2 going to floor 3 from floor 8 on elevator #: 1
+Closing doors at elevator 1
+Opening elevator 1 doors at floor: 3
+Rider #: 2 is getting off elevator #: 1 at floor 3
+Closing doors at elevator 1
+Opening elevator 1 doors at floor: 1
+Rider #: 6 is getting off elevator #: 1 at floor 1
+Closing doors at elevator 1

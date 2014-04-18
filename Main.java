@@ -11,6 +11,7 @@ import java.io.UnsupportedEncodingException;
  * @author carlosreyes
  *
  */
+
 public class Main {
 	public static void main(String[] args) {
 		Parser parser = new Parser();
@@ -29,20 +30,10 @@ public class Main {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		Parser.writer.close();
+//		for (Rider r : parser.getMyRiderList()) {
+//			writer.println(r.getMyID() + " " + r.getCurrentFloor());
+//		}
 		
-		PrintWriter writer = null;
-		try {
-			writer = new PrintWriter("output.txt", "UTF-8");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-		
-		for (Rider r : parser.getMyRiderList()) {
-			writer.println(r.getMyID() + " " + r.getCurrentFloor());
-		}
-		
-		writer.close();
 	}
 }

@@ -1,11 +1,14 @@
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Parser {
-
+	public static PrintWriter writer;
+	
 	private int myNumFloors;
 	private int myNumElevators;
 	private int myNumRiders;
@@ -14,6 +17,17 @@ public class Parser {
 	private List<Rider> myRiderList = new CopyOnWriteArrayList<Rider>();
 	private List<Elevator> myElevatorList = new CopyOnWriteArrayList<Elevator>();
 
+	Parser() {
+		try {
+			writer = new PrintWriter("output.txt", "UTF-8");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 	public void readFile(String fileName) {
 
 		Scanner in = null;

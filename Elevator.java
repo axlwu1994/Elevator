@@ -1,3 +1,6 @@
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.Set;
 import java.util.List;
@@ -14,7 +17,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 
 public class Elevator extends AbstractElevator implements Runnable {
-
+	
 	private boolean doorsOpen;
 	private boolean atFloor; //at the current floor
 	private Direction direction;
@@ -39,6 +42,7 @@ public class Elevator extends AbstractElevator implements Runnable {
 	
 	public Elevator(int numFloors, int elevatorId, int maxOccupancyThreshold) {
 		super(numFloors, elevatorId, maxOccupancyThreshold);
+		
 		numOfRiders = 0;
 		passengers = new CopyOnWriteArrayList<Rider>();
 		peopleBoarding = new CopyOnWriteArrayList<Rider>();
@@ -53,6 +57,7 @@ public class Elevator extends AbstractElevator implements Runnable {
 	
 	public Elevator(int numFloors, int elevatorId, int maxOccupancyThreshold,int bottomFloor,int topFloor) {
 		super(numFloors, elevatorId, maxOccupancyThreshold);
+		
 		numOfRiders = 0;
 		passengers = new CopyOnWriteArrayList<Rider>();
 		peopleBoarding = new CopyOnWriteArrayList<Rider>();
@@ -75,6 +80,7 @@ public class Elevator extends AbstractElevator implements Runnable {
 	public void ClosedDoors() {
 		//choose floor to go to
 		//loop through people in elevator to see where to go to
+		Parser.writer.println("Closing doors at elevator " + this.elevatorId);
 		int val = numFloors;
 		for(Rider currentRider : passengers){
 			if(direction == Direction.UP && currentRider.getDestinationFloor() < val){
@@ -100,6 +106,7 @@ public class Elevator extends AbstractElevator implements Runnable {
 	 */
 	@Override
 	public synchronized void VisitFloor(int floor) {
+		Parser.writer.println("Opening elevator "+ this.elevatorId +" doors at floor: " + floor);
 		//set currentFloor to the correctValue
 		atFloor = true;
 		currentFloor = floor;
@@ -114,7 +121,7 @@ public class Elevator extends AbstractElevator implements Runnable {
 		//raise the event so riders know to wake up
 		if(direction == Direction.UP){
 			for(EventBarrier curBarrier : controller.getBuilding().getUpBarriers()){
-				if(curBarrier.getFloor() == floor){
+				if(curBarrier.getFloor() == floor){					
 					//tell that floor to wake up and get on the elevator
 					curBarrier.raise();
 					//TODO: add riders to list for the elevator to know who to add.
@@ -159,6 +166,7 @@ public class Elevator extends AbstractElevator implements Runnable {
 	private synchronized void subtractRiders(){
 		for(Rider x : passengers){
 			if(x.getDestinationFloor() == currentFloor){
+				Parser.writer.println("Rider #: " + x.getMyID() + " is getting off elevator #: " + this.elevatorId + " at floor " + currentFloor);
 				numOfRiders--;
 				x.setCurrentFloor(currentFloor);
 				controller.getBuilding().getOnBarriers().remove(x.getEventBarrier());
@@ -275,6 +283,8 @@ public class Elevator extends AbstractElevator implements Runnable {
 	}
 
 	public void addPassenger(Rider x) {
+		Parser.writer.println("Rider #: " + x.getMyID() + " going to floor " + x.getDestinationFloor() 
+				+ " from floor " + currentFloor + " on elevator #: " + this.elevatorId);
 		numOfRiders++;
 		passengers.add(x);	
 	}
@@ -341,7 +351,7 @@ public class Elevator extends AbstractElevator implements Runnable {
 				this.VisitFloor(this.getDestinationFloor());
 			}
 			i++;
-		}		
+		}
 	}
 
 	public int getRangeBottomFloor() {
